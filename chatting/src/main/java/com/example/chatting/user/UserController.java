@@ -2,12 +2,13 @@ package com.example.chatting.user;
 
 import com.example.chatting.exception.ApiResponseMessage;
 import com.example.chatting.login.LoginRequestDto;
+import com.example.chatting.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,6 +16,7 @@ public class UserController {
 
     private final UserService userService;
 
+    // 회원 가입
     @PostMapping("/api/users/register")
     public ResponseEntity<ApiResponseMessage> userRegister(@RequestBody UserRequestDto userRequestDto) throws InterruptedException {
         userService.userRegister(userRequestDto);
@@ -38,8 +40,33 @@ public class UserController {
         return new ResponseEntity<ApiResponseMessage>(message, HttpStatus.OK);
     }
 
-    
+    // 유저 상세 페이지
+    @GetMapping("/api/users/{userId}")
+    public UserResponseDto userInfo(@PathVariable Long userId){
+        return userService.userInfo(userId);
+    }
 
+    // 마이 페이지
+    @GetMapping("/api/users/myPage")
+    public UserResponseDto myPage( @AuthenticationPrincipal UserDetailsImpl userDetails){
+        Long userId = userDetails.getUserId();
+        return userService.userInfo(userId);
+    }
+
+    // 유저 정보 수정
+    @PutMapping("/api/users/updated")
+    public ResponseEntity<ApiResponseMessage> update( @RequestPart(value = "userImgUrl", required = false) MultipartFile multipartFile,
+                                                      @RequestParam("nickname") String nickname,
+                                                      @RequestParam("introduction") String introduction,
+                                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        ProfileUpdateRequestDto updateRequestDto = new ProfileUpdateRequestDto(nickname, introduction);
+
+        userService.updateUser(multipartFile, updateRequestDto, userDetails);
+        ApiResponseMessage message = new ApiResponseMessage("Success", "정보수정이 완료 되었습니다", "", "");
+        return new ResponseEntity<ApiResponseMessage>(message, HttpStatus.OK);
+
+    }
 
 
 }

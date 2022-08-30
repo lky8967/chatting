@@ -2,10 +2,12 @@ package com.example.chatting.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
+@Setter
 @Getter @NoArgsConstructor
 @Table(name = "users")
 public class User {
@@ -23,7 +25,7 @@ public class User {
     @Column(nullable = false)
     private String nickname;
 
-    @Column(nullable = false)
+    @Column
     private String userImgUrl;
 
     @Column
@@ -37,5 +39,11 @@ public class User {
         this.userImgUrl = userImgUrl;
         this.introduction = introduction;
 
+    }
+
+    public void updateUser(String nickname, String introduction, String userImgUrl) {
+        this.nickname = nickname;
+        this.introduction = introduction;
+        this.userImgUrl = userImgUrl;
     }
 }
