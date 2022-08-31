@@ -69,16 +69,17 @@ public class UserController {
     }
 
 
-    // 메인페이지 유저 조회
-//    @GetMapping("/api/users/usersRandom")
-//    public UserMainResponseDto usersRandom(){
-//        return userService.userRandom();
-//    }
-
+    // 메인페이지 유저 조회 리스트로 묶는 버전
     @GetMapping("/api/users/usersRandom")
-    public List<UserResponseDto> usersRandom(){
+    public UserMainResponseDto usersRandom(){
         return userService.userRandom();
     }
+
+    // 메인페이지 유저 조회
+//    @GetMapping("/api/users/usersRandom")
+//    public List<UserResponseDto> usersRandom(){
+//        return userService.userRandom();
+//    }
 
 
 }
