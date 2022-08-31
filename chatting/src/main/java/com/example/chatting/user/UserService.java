@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -106,12 +108,25 @@ public class UserService {
 
         }
 
-
-
     }
 
+//    public UserMainResponseDto userRandom() {
+//        List<User> users = userRepository.findAllById();
+//
+//        List<UserResponseDto> result = users.stream()
+//                .map(UserResponseDto::new)
+//                .collect(Collectors.toList());
+////        List<UserResponseDto> result = users.stream().map(n -> new UserResponseDto(n)) .collect(Collectors.toList());
+//        return new UserMainResponseDto(result);
+//    }
 
+    public List<UserResponseDto> userRandom() {
+        List<User> users = userRepository.findAllById();
 
-
-
+        List<UserResponseDto> result = users.stream()
+                .map(UserResponseDto::new)
+                .collect(Collectors.toList());
+//        List<UserResponseDto> result = users.stream().map(n -> new UserResponseDto(n)) .collect(Collectors.toList());
+        return result;
+    }
 }

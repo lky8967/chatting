@@ -35,14 +35,12 @@ public class User {
     private String introduction;
 
     public User(String username, String password, String passwordCheck, String nickname, String userImgUrl, String introduction){
-
         this.username = username;
         this.password = password;
         this.passwordCheck = passwordCheck;
         this.nickname = nickname;
         this.userImgUrl = userImgUrl;
         this.introduction = introduction;
-
     }
 
     public void updateUser(String nickname, String introduction, String userImgUrl) {
@@ -50,4 +48,5 @@ public class User {
         this.introduction = introduction;
         this.userImgUrl = userImgUrl;
     }
+
 }

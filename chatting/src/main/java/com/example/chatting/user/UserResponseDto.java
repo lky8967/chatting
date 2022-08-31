@@ -3,6 +3,8 @@ package com.example.chatting.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 public class UserResponseDto {
@@ -17,4 +19,6 @@ public class UserResponseDto {
         this.userImgUrl = user.getUserImgUrl();
         this.introduction = user.getIntroduction();
     }
+
+
 }

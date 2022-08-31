@@ -9,6 +9,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -64,7 +66,18 @@ public class UserController {
         userService.updateUser(multipartFile, updateRequestDto, userDetails);
         ApiResponseMessage message = new ApiResponseMessage("Success", "정보수정이 완료 되었습니다", "", "");
         return new ResponseEntity<ApiResponseMessage>(message, HttpStatus.OK);
+    }
 
+
+    // 메인페이지 유저 조회
+//    @GetMapping("/api/users/usersRandom")
+//    public UserMainResponseDto usersRandom(){
+//        return userService.userRandom();
+//    }
+
+    @GetMapping("/api/users/usersRandom")
+    public List<UserResponseDto> usersRandom(){
+        return userService.userRandom();
     }
 
 
