@@ -1,7 +1,6 @@
 package com.example.chatting.security;
 
-import com.example.chatting.jwt.JwtAuthenticationFilter;
-import com.example.chatting.jwt.JwtTokenProvider;
+import com.example.chatting.jwt.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -85,6 +84,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     CorsConfiguration configuration = new CorsConfiguration();
 
                     configuration.addAllowedOrigin("http://localhost:3000");
+                    configuration.setAllowCredentials(true);
+                    configuration.addAllowedOrigin("*");
                     configuration.setAllowCredentials(true);
                     configuration.addAllowedHeader("*");
                     configuration.addAllowedMethod("*");

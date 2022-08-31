@@ -6,6 +6,7 @@ import lombok.Getter;
 public class UserRequestDto {
     private String username;
     private String password;
+    private String passwordCheck;
     private String nickname;
     private String userImgUrl;
     private String introduction;

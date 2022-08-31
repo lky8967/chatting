@@ -1,7 +1,6 @@
 package com.example.chatting.user;
 
 import com.example.chatting.exception.ApiResponseMessage;
-import com.example.chatting.login.LoginRequestDto;
 import com.example.chatting.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

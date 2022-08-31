@@ -26,6 +26,7 @@ public class UserService {
     public void userRegister(UserRequestDto userRequestDto) {
         String username = userRequestDto.getUsername();
         String password = passwordEncoder.encode(userRequestDto.getPassword());
+        String passwordCheck = passwordEncoder.encode(userRequestDto.getPasswordCheck());
         String userImgUrl = userRequestDto.getUserImgUrl();
         String nickname = userRequestDto.getNickname();
         String introduction = userRequestDto.getIntroduction();
@@ -36,7 +37,7 @@ public class UserService {
             throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
         }
 
-        User user = new User(username, password, nickname ,userImgUrl , introduction);
+        User user = new User(username, password, passwordCheck , nickname , userImgUrl , introduction);
         userRepository.save(user);
 
     }
@@ -75,7 +76,7 @@ public class UserService {
                 () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
         );
 
-// 닉네임 중복검사용
+    // 닉네임 중복검사용
         Optional<User> foundNickname = userRepository
                 .findByNickname(updateDto.getNickname());
 
