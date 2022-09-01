@@ -1,6 +1,7 @@
 package com.example.chatting.config;
 
 
+import com.example.chatting.exception.CustomException;
 import com.example.chatting.jwt.HeaderTokenExtractor;
 import com.example.chatting.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+
+import static com.example.chatting.exception.ErrorCode.INVAILD_CONTENTS_TOKEN;
 
 
 @Component
