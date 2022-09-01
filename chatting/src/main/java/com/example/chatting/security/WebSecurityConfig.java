@@ -19,6 +19,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+
 
 @Configuration
 @EnableWebSecurity // 스프링 Security 지원을 가능하게 함
@@ -53,6 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         // 시큐리티에 cors를 맞춘다
         http.cors();
+        http.cors().configurationSource(corsConfigurationSource());
+
         http.headers().frameOptions().disable();
         http.authorizeRequests()
                 // api 요청 접근허용
@@ -79,18 +83,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
                 }
+
                 @Bean
                 public CorsConfigurationSource corsConfigurationSource() {
                     CorsConfiguration configuration = new CorsConfiguration();
 
+                    configuration.addAllowedOrigin("http://15.165.205.156");
+                    configuration.setAllowCredentials(true);
                     configuration.addAllowedOrigin("http://localhost:3000");
                     configuration.setAllowCredentials(true);
-                    configuration.addAllowedOrigin("*");
-                    configuration.setAllowCredentials(true);
-                    configuration.addAllowedHeader("*");
                     configuration.addAllowedMethod("*");
-                    configuration.addExposedHeader("*");
+                    configuration.addAllowedHeader("*");
+//                    configuration.addExposedHeader("*");
                     configuration.addExposedHeader("Authorization");
+
                     configuration.setAllowCredentials(true);
 
                     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

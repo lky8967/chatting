@@ -1,11 +1,15 @@
 HELP.md
 .gradle
+.application.properties
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### my ignore ###
+src/main/resources/application.properties
 ### STS ###
+
 .apt_generated
 .classpath
 .factorypath

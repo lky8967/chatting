@@ -25,6 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
                 // 주소 수정 부분
                 .allowedOrigins(
                         "http://localhost:3000",
+                        "http://http://15.165.205.156:8080",
                         "https://s3.ap-northeast-2.amazonaws.com/marketkurly-imageupload",
                         "http://ribborn.s3-website.ap-northeast-2.amazonaws.com"
                         )
