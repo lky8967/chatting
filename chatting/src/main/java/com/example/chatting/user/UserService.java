@@ -103,9 +103,7 @@ public class UserService {
                 UserImg profileImg = new UserImg(userImgUrl);
                 user.setUserImgUrl(profileImg.getUserImgUrl());
             }
-
             user.updateUser(updateDto.getNickname(), updateDto.getIntroduction(), userImgUrl);
-
         }
 
     }
