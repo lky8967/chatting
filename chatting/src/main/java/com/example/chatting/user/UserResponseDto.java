@@ -3,7 +3,6 @@ package com.example.chatting.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
