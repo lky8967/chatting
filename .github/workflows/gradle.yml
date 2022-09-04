@@ -36,7 +36,7 @@ jobs:
         java-version: 1.8
 
     - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      run: chmod +x gradl
       shell: bash
       working-directory: ./chatting
       
