@@ -16,8 +16,6 @@ public class LoginService {
     private final PasswordEncoder passwordEncoder;
 
     public String login(LoginRequestDto loginRequestDto) {
-//        User user = userRepository.findByUsername(loginRequestDto.getUsername()).orElseThrow(
-//                () -> new NullPointerException("해당 아이디가 존재하지 않습니다.");
         User user = userRepository.findByUsername(loginRequestDto.getUsername()).orElseThrow(
                 () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
         );
