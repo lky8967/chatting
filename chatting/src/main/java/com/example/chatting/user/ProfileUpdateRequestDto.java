@@ -18,4 +18,9 @@ public class ProfileUpdateRequestDto {
         this.introduction = introduction;
     }
 
+    public void getIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+
 }

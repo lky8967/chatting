@@ -24,6 +24,7 @@ public class UserService {
     private final UserValidator userValidator;
 //    private final BCryptPasswordEncoder encoder;
 
+    // 회원 가입
     @Transactional
     public void userRegister(UserRequestDto userRequestDto) {
         String username = userRequestDto.getUsername();
@@ -83,21 +84,37 @@ public class UserService {
                 .findByNickname(updateDto.getNickname());
 
         String nickname = user.getNickname();
+        String introduction = user.getIntroduction();
+
+        // 자기소개를 수정하지 않을경우
+        if (updateDto.getIntroduction().equals("")){
+            System.out.println("자기소개가 빈값일 경우");
+            updateDto.getIntroduction(introduction);
+        }
+
         if (updateDto.getNickname() != null) {
             // 변경하고자 하는 닉네임과 동일하면 유효성 검사하지 않음
             if (!updateDto.getNickname().equals(nickname)) {
                 // 닉네임 중복 검사
                 userValidator.checkNickname(foundNickname);
-
                 // 닉네임 유효성 검사
 //                userValidator.checkNicknameIsValid(updateDto.getNickname());
             }
 //            nickname = updateDto.getNickname();
 
-            String userImgUrl = null;
+            String userImgUrl = "";
+            String imgUser = user.getUserImgUrl();
 
+            // 기본 이미지가 있을경우
+            if(!imgUser.equals("")){
+                System.out.println("기본 이미지일경우 ");
+                userImgUrl = imgUser;
+                UserImg profileImg = new UserImg(userImgUrl);
+                user.setUserImgUrl(profileImg.getUserImgUrl());
+
+            }
             // 프로필 이미지를 직접 업로드 했을 경우
-            if (multipartFile != null) {
+            else if (multipartFile != null) {
                 Map<String, String> imgUrl = s3Service.uploadFile(multipartFile);
                 userImgUrl = imgUrl.get("url");
                 UserImg profileImg = new UserImg(userImgUrl);
