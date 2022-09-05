@@ -140,10 +140,6 @@ public class UserService {
         User user = userRepository.findById(userDetails.getUserId()).orElseThrow(
                 () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
         );
-
-//        String userImgUrl = "";
-
-//        user.deletedimg(updateDto);
         user.setUserImgUrl("");
     }
 }
