@@ -129,11 +129,21 @@ public class UserService {
     // 메인페이지 유저 조회 리스트로 묶는 버전
     public UserMainResponseDto userRandom() {
         List<User> users = userRepository.findAllById();
-
         List<UserResponseDto> result = users.stream()
                 .map(UserResponseDto::new)
                 .collect(Collectors.toList());
         return new UserMainResponseDto(result);
     }
 
+    @Transactional
+    public void deleteImg(UserDetailsImpl userDetails) {
+        User user = userRepository.findById(userDetails.getUserId()).orElseThrow(
+                () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
+        );
+
+//        String userImgUrl = "";
+
+//        user.deletedimg(updateDto);
+        user.setUserImgUrl("");
+    }
 }

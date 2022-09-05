@@ -75,4 +75,11 @@ public class UserController {
         return userService.userRandom();
     }
 
+    @PutMapping("/api/users/imgDeleted")
+    public ResponseEntity<ApiResponseMessage> deleteImg(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        userService.deleteImg(userDetails);
+        ApiResponseMessage message = new ApiResponseMessage("Success", "정보수정이 완료 되었습니다", "", "");
+        return new ResponseEntity<ApiResponseMessage>(message, HttpStatus.OK);
+    }
+
 }
