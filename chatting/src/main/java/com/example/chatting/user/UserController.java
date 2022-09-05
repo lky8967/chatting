@@ -75,11 +75,4 @@ public class UserController {
         return userService.userRandom();
     }
 
-    // 메인페이지 유저 조회
-//    @GetMapping("/api/users/usersRandom")
-//    public List<UserResponseDto> usersRandom(){
-//        return userService.userRandom();
-//    }
-
-
 }

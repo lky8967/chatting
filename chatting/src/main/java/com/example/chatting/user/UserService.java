@@ -116,17 +116,7 @@ public class UserService {
         List<UserResponseDto> result = users.stream()
                 .map(UserResponseDto::new)
                 .collect(Collectors.toList());
-//        List<UserResponseDto> result = users.stream().map(n -> new UserResponseDto(n)) .collect(Collectors.toList());
         return new UserMainResponseDto(result);
     }
 
-//    public List<UserResponseDto> userRandom() {
-//        List<User> users = userRepository.findAllById();
-//
-//        List<UserResponseDto> result = users.stream()
-//                .map(UserResponseDto::new)
-//                .collect(Collectors.toList());
-////        List<UserResponseDto> result = users.stream().map(n -> new UserResponseDto(n)) .collect(Collectors.toList());
-//        return result;
-//    }
 }
