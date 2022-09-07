@@ -74,6 +74,7 @@ public class UserController {
         return userService.userRandom();
     }
 
+    // 유저 프로필 기본 이미지로 바꾸기
     @PutMapping("/api/users/imgDeleted")
     public ResponseEntity<ApiResponseMessage> deleteImg(@AuthenticationPrincipal UserDetailsImpl userDetails){
         userService.deleteImg(userDetails);
