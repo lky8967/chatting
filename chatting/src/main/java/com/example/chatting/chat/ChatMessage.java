@@ -40,4 +40,22 @@ public class ChatMessage extends CreationDate {
     private String img;
 
 
+    public static ChatMessage createOf(ChatMessageRequestDto requestDto, String username, String nickname) {
+
+        ChatMessage message = new ChatMessage();
+
+        message.senderName = username;
+        message.senderNickname = nickname;
+        message.senderId = requestDto.getSenderId();
+        message.roomId = requestDto.getRoomId();
+        message.message = requestDto.getMessage();
+        message.isRead = requestDto.getIsRead();
+        message.type = requestDto.getType();
+
+        return message;
+    }
+
+
+
+
 }

@@ -27,7 +27,7 @@ public class ChatMessageController {
         String nickname = jwtTokenProvider.getNickName(jwt);
         Long userId = requestDto.getSenderId();
 
-//        ChatMessageResponseDto responseDto = chatMessageService.saveMessage(requestDto, username ,  nickname); //DB에 저장
-//        chatMessageService.sendMessage(requestDto, username, responseDto);// 메시지를 sub 주소로 발송해줌
+        ChatMessageResponseDto responseDto = chatMessageService.saveMessage(requestDto, username ,  nickname); //DB에 저장
+        chatMessageService.sendMessage(requestDto, username, responseDto);// 메시지를 sub 주소로 발송해줌
     }
 }

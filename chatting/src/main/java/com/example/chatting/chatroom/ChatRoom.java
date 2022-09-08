@@ -30,4 +30,11 @@ public class ChatRoom {
     @Column(nullable = false)
     private Boolean accOut;
 
+    public void reqOut(Boolean bool) {
+        this.reqOut = bool;
+    }
+
+    public void accOut(Boolean bool) {
+        this.accOut = bool;
+    }
 }

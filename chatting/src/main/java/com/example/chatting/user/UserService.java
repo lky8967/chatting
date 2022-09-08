@@ -131,9 +131,7 @@ public class UserService {
             }
             user.updateUser(updateDto.getNickname(), updateDto.getIntroduction(), userImgUrl);
         }
-
     }
-
 
     // 메인페이지 유저 조회 리스트로 묶는 버전
     public UserMainResponseDto userRandom() {
