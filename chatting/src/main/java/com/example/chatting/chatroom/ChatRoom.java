@@ -37,4 +37,20 @@ public class ChatRoom {
     public void accOut(Boolean bool) {
         this.accOut = bool;
     }
+
+
+    public static ChatRoom createOf(User requester, User acceptor) {
+
+        ChatRoom room = new ChatRoom();
+        room.requester = requester;
+        room.acceptor = acceptor;
+        room.reqOut = false;
+        room.accOut = true;
+//        room.accFixed = false;
+//        room.reqFixed = false;
+//        room.type = "START";
+        return room;
+    }
+
+
 }

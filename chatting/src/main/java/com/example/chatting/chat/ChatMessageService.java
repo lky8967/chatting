@@ -9,6 +9,9 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ChatMessageService {
@@ -20,9 +23,7 @@ public class ChatMessageService {
 
     public ChatMessageResponseDto saveMessage(ChatMessageRequestDto requestDto, String username, String nickname) {
 
-
         ChatMessageRequestDto sendMessageDto = new ChatMessageRequestDto();
-
 
         System.out.println("requestDto.getRoomId() = " + requestDto.getRoomId());
         ChatRoom chatRoom = chatRoomRepository.findByIdFetch(requestDto.getRoomId()).orElseThrow(
@@ -52,7 +53,24 @@ public class ChatMessageService {
         ChatMessageRequestDto sendMessageDto = new ChatMessageRequestDto();
 //        redisMessagePublisher.publish(requestDto);
 
-        messagingTemplate.convertAndSend("/sub/chat/rooms/" + userId, msgUpdateDto); // 개별 채팅 목록 보기 업데이트
-        messagingTemplate.convertAndSend("/sub/chat/room/" + requestDto.getRoomId(), responseDto); // 채팅방 내부로 메시지 전송
+        messagingTemplate.convertAndSend("/sub/api/chat/rooms/" + userId, msgUpdateDto); // 개별 채팅 목록 보기 업데이트
+        messagingTemplate.convertAndSend("/sub/api/chat/room/" + requestDto.getRoomId(), responseDto); // 채팅방 내부로 메시지 전송
+    }
+
+    // 메시지 찾기, 페이징 처리
+    public List<ChatMessageResponseDto> getMessage(Long roomId, Long userid , String nickname) {
+
+        System.out.println("5555555555555555555555555555555555555 메시지찾기 getMessage nickname = " + nickname);
+        // 메시지 찾아오기
+        List<ChatMessage> messages = chatMessageRepository.findAllByRoomIdOrderByIdAsc(roomId);
+        // responseDto 만들기
+
+        List<ChatMessageResponseDto> responseDtos = new ArrayList<>();
+        // 상대가 보낸 메시지라면 모두 읽음으로 처리 -> isRead 상태 모두 true로 업데이트
+        chatMessageRepository.updateChatMessage(roomId, userid);
+        for (ChatMessage message : messages) {
+            responseDtos.add(ChatMessageResponseDto.createFrom(message));
+        }
+        return responseDtos;
     }
 }

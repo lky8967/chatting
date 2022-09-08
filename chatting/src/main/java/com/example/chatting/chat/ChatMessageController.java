@@ -19,7 +19,7 @@ public class ChatMessageController {
 
 
     // 해당 어노테이션을 통해 웹소켓으로 pub 되는 모든 메시지를 처리하게 됩니다. URI에 자동으로 접두어 /pub 이 붙습니다.
-    @MessageMapping("/chat/message")
+    @MessageMapping("/api/chat/message")
     public void message(ChatMessageRequestDto requestDto, @Header("Authorization") String token) throws IOException { // 토큰을 헤더에서 받는 것으로 최종 확정함
 
         String jwt = extractor.extract(token);

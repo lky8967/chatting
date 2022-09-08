@@ -56,6 +56,20 @@ public class ChatMessage extends CreationDate {
     }
 
 
+    public static ChatMessage createOutOf(Long roomId, User user) {
+
+        ChatMessage message = new ChatMessage();
+
+        message.roomId = roomId;
+        message.senderNickname = user.getNickname();
+        message.senderName = user.getUsername();
+        message.message = user.getNickname()  + "님이 채팅방을 나갔습니다.";
+        message.isRead = true;
+//        message.type = "STATUS";
+
+        return message;
+    }
+
 
 
 }
