@@ -107,6 +107,7 @@ public class UserService {
 
             // 기본 이미지가 있을경우
             if(!imgUser.equals("") && multipartFile == null){
+//            if(!imgUser.equals("") && multipartFile.isEmpty()){
                 System.out.println("기본 이미지일경우");
                 userImgUrl = imgUser;
 //                UserImg profileImg = new UserImg(userImgUrl);

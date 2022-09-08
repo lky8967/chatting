@@ -1,6 +1,7 @@
 package com.example.chatting.login;
 
 import com.example.chatting.jwt.JwtTokenProvider;
+import com.example.chatting.jwt.Token;
 import com.example.chatting.user.User;
 import com.example.chatting.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,4 +31,5 @@ public class LoginService {
         }
 //        throw new IllegalArgumentException("오류!");
     }
+
 }
