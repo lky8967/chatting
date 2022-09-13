@@ -9,11 +9,13 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ChatMessageService {
 
     private final SimpMessageSendingOperations messagingTemplate;
@@ -47,10 +49,11 @@ public class ChatMessageService {
 
     }
 
+
     // 채팅 메시지 발송하기
     public void sendMessage(ChatMessageRequestDto requestDto, String userId, ChatMessageResponseDto responseDto) {
         RoomMsgUpdateDto msgUpdateDto = RoomMsgUpdateDto.createFrom(requestDto);
-        ChatMessageRequestDto sendMessageDto = new ChatMessageRequestDto();
+//        ChatMessageRequestDto sendMessageDto = new ChatMessageRequestDto();
 //        redisMessagePublisher.publish(requestDto);
 
         messagingTemplate.convertAndSend("/sub/api/chat/rooms/" + userId, msgUpdateDto); // 개별 채팅 목록 보기 업데이트

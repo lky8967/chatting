@@ -5,11 +5,14 @@ import com.example.chatting.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
 @RestController
+@RequestMapping
 @RequiredArgsConstructor
 public class ChatMessageController {
 

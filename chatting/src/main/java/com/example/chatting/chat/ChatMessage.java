@@ -4,11 +4,12 @@ import com.example.chatting.user.User;
 import com.example.chatting.utils.CreationDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Component
 @NoArgsConstructor
 public class ChatMessage extends CreationDate {
 

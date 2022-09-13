@@ -36,6 +36,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // 메시지 발행하는 prefix /pub 로 시작 하도록 설정
         // 구독 요청의 prefix /sub 으로 시작 하도록 설정
         // 현재 엔드포인트 -> /webSocket
+        System.out.println("연결 성공");
     }
 
     @Override
