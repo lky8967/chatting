@@ -34,9 +34,10 @@ public class RedisConfig {
     }
 
 
-    //참고 블로그 https://kim-oriental.tistory.com/28
+    // 참고 블로그 https://kim-oriental.tistory.com/28
     @SuppressWarnings("deprecation")
-    //deprecation 권장되지 않는 기능과 관련된 경고를 억제
+    // 어노테이션 참고 블로그 https://ddolcat.tistory.com/393
+    // deprecation 권장되지 않는 기능과 관련된 경고를 억제
     @Bean
     public CacheManager cacheManager() {
         RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory());
