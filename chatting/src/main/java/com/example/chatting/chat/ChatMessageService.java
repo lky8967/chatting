@@ -2,7 +2,6 @@ package com.example.chatting.chat;
 
 import com.example.chatting.chatroom.ChatRoom;
 import com.example.chatting.chatroom.ChatRoomRepository;
-import com.example.chatting.chatroom.RoomMsgUpdateDto;
 import com.example.chatting.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -22,7 +21,7 @@ public class ChatMessageService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
 
-
+    // 메시지 DB 저장
     public ChatMessageResponseDto saveMessage(ChatMessageRequestDto requestDto, String username, String nickname) {
 
         ChatMessageRequestDto sendMessageDto = new ChatMessageRequestDto();

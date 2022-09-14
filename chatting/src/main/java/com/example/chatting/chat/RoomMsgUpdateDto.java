@@ -1,6 +1,5 @@
-package com.example.chatting.chatroom;
+package com.example.chatting.chat;
 
-import com.example.chatting.chat.ChatMessageRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
