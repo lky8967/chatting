@@ -26,30 +26,27 @@ import java.time.Duration;
 @EnableCaching
 
 public class RedisConfig {
-    @Value("${spring.redis.port}")
-    private int port;
 
     @Value("${spring.redis.host}")
     private String host;
 
-    @Autowired
-    public ObjectMapper objectMapper;
-
-    @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.setConnectionFactory(connectionFactory);
-        return redisTemplate;
-    }
+    @Value("${spring.redis.port}")
+    private int port;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(host);
-        redisStandaloneConfiguration.setPort(port);
-        LettuceConnectionFactory connectionFactory = new LettuceConnectionFactory(redisStandaloneConfiguration);
-        return connectionFactory;
+        return new LettuceConnectionFactory(host, port);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Bean
+    public CacheManager cacheManager() {
+        RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory());
+        RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer())) // Value Serializer 변경
+                .prefixKeysWith("Test:") // Key Prefix로 "Test:"를 앞에 붙여 저장
+                .entryTtl(Duration.ofMinutes(30)); // 캐시 수명 30분
+        builder.cacheDefaults(configuration);
+        return builder.build();
     }
 }
