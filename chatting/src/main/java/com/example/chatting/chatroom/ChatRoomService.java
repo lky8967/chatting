@@ -32,16 +32,17 @@ public class ChatRoomService {
 
     // 채팅방 만들기
     @Transactional
-    public Long createRoom(Long userid, Long acceptorId){
+    public Long createRoom(Long requesterId, Long acceptorId){
+
         // 유효성 검사
-        if (userid.equals(acceptorId) ) {
+        if (requesterId.equals(acceptorId) ) {
             throw new CustomException(CANNOT_CHAT_WITH_ME);
         }
         // 채팅 상대 찾아오기
         User acceptor = userRepository.findById(acceptorId)
                 .orElseThrow( () -> new CustomException(NOT_FOUND_USER)
                 );
-        User requester = userRepository.findById(userid)
+        User requester = userRepository.findById(requesterId)
                 .orElseThrow( () -> new CustomException(NOT_FOUND_USER)
                 );
         // 채팅방을 찾아보고, 없을 시 DB에 채팅방 저장
@@ -65,9 +66,9 @@ public class ChatRoomService {
 
     // 방을 나간 상태로 변경하기
     @Transactional
-    public void exitRoom(Long id, Long userid) {
+    public void exitRoom(Long id, Long userId) {
         // 회원 찾기
-        User user = userRepository.findById(userid)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(NOT_FOUND_USER)
                 );
         // 채팅방 찾아오기
@@ -75,9 +76,9 @@ public class ChatRoomService {
                 () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
         );
 
-        if (chatRoom.getRequester().getId().equals(userid)) {
+        if (chatRoom.getRequester().getId().equals(userId)) {
             chatRoom.reqOut(true);
-        } else if (chatRoom.getAcceptor().getId().equals(userid)) {
+        } else if (chatRoom.getAcceptor().getId().equals(userId)) {
             chatRoom.accOut(true);
         } else {
             throw new CustomException(EXIT_INVAILED);

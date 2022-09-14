@@ -24,16 +24,27 @@ public class ChatRoomController {
 
 
     // 채팅방 만들기
-    @PostMapping("/api/chat/room")
+//    @PostMapping("/api/chat/room")
+//    public Long createRoom(@AuthenticationPrincipal UserDetailsImpl userDetails,
+//                           @RequestBody UserRequestDto requestDto) {
+//
+//        Long userid = userDetails.getUserId();
+//        Long acceptorId = requestDto.getUserId();
+//        System.out.println("------주는 쪽 userid = " + userid);
+//        System.out.println("------받는쪽  acceptorId = " + acceptorId);
+//
+//        return roomService.createRoom(userid, acceptorId);
+//    }
+    @PostMapping("/api/chat/room/{userId}")
     public Long createRoom(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                           @RequestBody UserRequestDto requestDto) {
-        
-        Long acceptorId = requestDto.getUserId();
-        Long userid = userDetails.getUserId();
-        System.out.println("------주는 쪽 userid = " + userid);
+                           @PathVariable Long userId) {
+
+        Long requesterId = userDetails.getUserId();
+        Long acceptorId = userId;
+        System.out.println("------주는 쪽 userid = " + requesterId);
         System.out.println("------받는쪽  acceptorId = " + acceptorId);
 
-        return roomService.createRoom(userid, acceptorId);
+        return roomService.createRoom(requesterId, acceptorId);
     }
 
     // 전체 채팅방 목록 가져오기
@@ -61,8 +72,8 @@ public class ChatRoomController {
     @GetMapping("/api/chat/room/exit/{roomId}")
     public ResponseEntity<OkDto> exitRoom(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                           @PathVariable Long roomId) {
-        Long userid = userDetails.getUserId();
-        roomService.exitRoom(roomId, userid);
+        Long userId = userDetails.getUserId();
+        roomService.exitRoom(roomId, userId);
         return ResponseEntity.ok().body(OkDto.valueOf("true"));
     }
 
