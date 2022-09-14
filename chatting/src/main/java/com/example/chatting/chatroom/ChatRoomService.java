@@ -73,7 +73,7 @@ public class ChatRoomService {
                 );
         // 채팅방 찾아오기
         ChatRoom chatRoom = roomRepository.findByIdFetch(id).orElseThrow(
-                () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
+                () -> new NullPointerException("해당 채팅방이 존재하지 않습니다.")
         );
 
         if (chatRoom.getRequester().getId().equals(userId)) {
