@@ -1,6 +1,7 @@
 package com.example.chatting.chatroom;
 
 import com.example.chatting.user.User;
+import com.example.chatting.utils.TimeStamp;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class ChatRoom {
+public class ChatRoom extends TimeStamp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

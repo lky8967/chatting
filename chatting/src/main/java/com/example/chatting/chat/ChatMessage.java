@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter @Component
 @NoArgsConstructor
+//public class ChatMessage extends CreationDate {
 public class ChatMessage extends CreationDate {
 
     @Id
@@ -56,6 +57,18 @@ public class ChatMessage extends CreationDate {
         return message;
     }
 
+//    public static ChatMessage createInitOf(Long roomId) {
+//
+//        ChatMessage message = new ChatMessage();
+//
+//        message.roomId = roomId;
+//        message.senderId = roomId;
+////        message.message = "채팅방이 개설되었습니다.";
+//        message.isRead = true;
+//        message.type = "STATUS";
+//
+//        return message;
+//    }
 
     public static ChatMessage createOutOf(Long roomId, User user) {
 
@@ -70,6 +83,19 @@ public class ChatMessage extends CreationDate {
 
         return message;
     }
+
+
+
+    // 이미지 사용시
+    public void setImg(String img) {
+        this.img = img;
+    }
+    public ChatMessage(Long roomId, Long userId, String message) {
+        this.roomId = roomId;
+        this.senderId = userId;
+        this.message = message;
+    }
+
 
 
 

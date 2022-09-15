@@ -88,7 +88,8 @@ public class ChatRoomService {
             roomRepository.deleteById(chatRoom.getId()); // 둘 다 나간 상태라면 방 삭제
         } else {
             // 채팅방 종료 메시지 전달 및 저장
-            messagingTemplate.convertAndSend("/sub/chat/room/" + chatRoom.getId(),
+//            messagingTemplate.convertAndSend("/sub/chat/room/" + chatRoom.getId(),
+            messagingTemplate.convertAndSend("/api/chat/room/{userId}" + chatRoom.getId(),
                     ChatMessageResponseDto.createFrom(
                             messageRepository.save(ChatMessage.createOutOf(id, user))
                     )

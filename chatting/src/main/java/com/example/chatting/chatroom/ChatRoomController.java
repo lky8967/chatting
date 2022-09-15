@@ -5,7 +5,6 @@ import com.example.chatting.chat.ChatMessageResponseDto;
 import com.example.chatting.chat.ChatMessageService;
 import com.example.chatting.exception.OkDto;
 import com.example.chatting.security.UserDetailsImpl;
-import com.example.chatting.user.UserRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -50,6 +49,7 @@ public class ChatRoomController {
     // 전체 채팅방 목록 가져오기
     @GetMapping("/api/chat/rooms")
     public List<RoomResponseDto> getRooms(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+
         Long userId = userDetails.getUserId();
         String nickname = userDetails.getNickname();
         System.out.println(" 전체 채팅방 목록 가져오기 userId = " + userId);
@@ -62,9 +62,9 @@ public class ChatRoomController {
     @GetMapping("/api/chat/room/{roomId}")
     public List<ChatMessageResponseDto> getMessage(@PathVariable Long roomId ,
                                                    @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        Long userid = userDetails.getUserId();
+        Long userId = userDetails.getUserId();
         String nickname = userDetails.getNickname();
-        return messageService.getMessage(roomId, userid, nickname);
+        return messageService.getMessage(roomId, userId, nickname);
     }
 
 

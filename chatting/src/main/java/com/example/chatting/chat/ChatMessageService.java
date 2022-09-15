@@ -60,7 +60,7 @@ public class ChatMessageService {
     }
 
     // 메시지 찾기, 페이징 처리
-    public List<ChatMessageResponseDto> getMessage(Long roomId, Long userid , String nickname) {
+    public List<ChatMessageResponseDto> getMessage(Long roomId, Long userId , String nickname) {
 
         System.out.println("5555555555555555555555555555555555555 메시지찾기 getMessage nickname = " + nickname);
         // 메시지 찾아오기
@@ -69,7 +69,7 @@ public class ChatMessageService {
 
         List<ChatMessageResponseDto> responseDtos = new ArrayList<>();
         // 상대가 보낸 메시지라면 모두 읽음으로 처리 -> isRead 상태 모두 true로 업데이트
-        chatMessageRepository.updateChatMessage(roomId, userid);
+        chatMessageRepository.updateChatMessage(roomId, userId);
         for (ChatMessage message : messages) {
             responseDtos.add(ChatMessageResponseDto.createFrom(message));
         }
