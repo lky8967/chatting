@@ -14,8 +14,8 @@ import java.util.Optional;
 @Repository
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
-    @Query(value =
-            "SELECT DISTINCT r.room_id AS roomId, r.acc_out AS accOut, r.req_out AS reqOut, " +
+    // 유저를 찾아오면서, 동시에 방의 메시지 안읽음 카운트까지 계산하여 가져와야 합니다.
+    @Query(value =  "SELECT DISTINCT r.room_id AS roomId, r.acc_out AS accOut, r.req_out AS reqOut, r.acc_fixed AS accFixed, r.req_fixed AS reqFixed, " +
                     "u1.user_id AS accId, u1.nickname AS accNickname, u2.user_id AS reqId, u2.nickname AS reqNickname, " +
                     "msg.message AS message, msg.created_at AS date " +
                     "FROM chat_room r " +

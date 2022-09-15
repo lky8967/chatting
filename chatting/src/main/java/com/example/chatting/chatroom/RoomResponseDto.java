@@ -15,43 +15,43 @@ import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.RE
 public class RoomResponseDto {
 
     private Long roomId;
-    private Long userId;
-    private String senderNickname;
-    private String senderName;
-    private Long senderId;
+    private Long acceptorUserId;
+    private Long requesterUserId;
+    private String acceptorNickname;
+    private String requesterUserNickname;
     private String message;
     private LocalDateTime date;
-    private Boolean isRead;
+//    private Boolean isRead;
     private Boolean isBanned;
     private int unreadCnt;
-    private String type;
+//    private String type;
 
-    public static RoomResponseDto createOf(String type, String flag, RoomDto dto, int unreadCnt, Boolean isBanned){
+    public static RoomResponseDto createOf( String flag, RoomDto dto, int unreadCnt, Boolean isBanned){
 
         RoomResponseDto responseDto = new RoomResponseDto();
 
         responseDto.isBanned = isBanned;
         responseDto.unreadCnt = unreadCnt;
-        responseDto.type = type;
+//        responseDto.type = type;
         responseDto.roomId = dto.getRoomId();
         responseDto.message = dto.getMessage();
-        responseDto.senderId = dto.getAccId();
-        responseDto.senderNickname = dto.getAccNickname();
+        responseDto.acceptorUserId = dto.getAccId();
+        responseDto.acceptorNickname = dto.getAccNickname();
         responseDto.date = dto.getDate();
-        responseDto.isRead = dto.getIsRead();
+//        responseDto.isRead = dto.getIsRead();
 
         switch ( flag ) {
 
             case ACCEPTOR:
 
-                responseDto.userId = dto.getReqId();
-                responseDto.senderNickname = dto.getReqNickname();
+                responseDto.requesterUserId = dto.getReqId();
+                responseDto.requesterUserNickname = dto.getReqNickname();
                 break;
 
             case REQUESTER:
 
-                responseDto.userId = dto.getAccId();
-                responseDto.senderNickname = dto.getAccNickname();
+                responseDto.acceptorUserId = dto.getAccId();
+                responseDto.acceptorNickname = dto.getAccNickname();
                 break;
 
             default: break;

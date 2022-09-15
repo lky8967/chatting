@@ -18,6 +18,8 @@ public interface RoomDto {
     LocalDateTime getDate();
     String getMessage();
 
+    Boolean getAccFixed();
+    Boolean getReqFixed();
 
 
 }
