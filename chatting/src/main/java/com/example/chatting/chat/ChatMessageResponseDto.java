@@ -56,7 +56,8 @@ public class ChatMessageResponseDto {
         responseDto.messageId = message.getId();
         responseDto.message = message.getMessage();
         responseDto.date = message.getCreatedAt();
-        responseDto.type = message.getType();
+//        responseDto.type = message.getType();
+        responseDto.type = "STATUS";
         responseDto.isRead = true;
         responseDto.senderName = message.getSenderName();
         responseDto.senderNickname = message.getSenderNickname();

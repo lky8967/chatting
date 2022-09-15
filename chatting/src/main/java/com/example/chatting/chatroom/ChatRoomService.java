@@ -66,13 +66,13 @@ public class ChatRoomService {
 
     // 방을 나간 상태로 변경하기
     @Transactional
-    public void exitRoom(Long id, Long userId) {
+    public void exitRoom(Long roomId, Long userId) {
         // 회원 찾기
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(NOT_FOUND_USER)
                 );
         // 채팅방 찾아오기
-        ChatRoom chatRoom = roomRepository.findByIdFetch(id).orElseThrow(
+        ChatRoom chatRoom = roomRepository.findByIdFetch(roomId).orElseThrow(
                 () -> new NullPointerException("해당 채팅방이 존재하지 않습니다.")
         );
 
@@ -91,7 +91,7 @@ public class ChatRoomService {
 //            messagingTemplate.convertAndSend("/sub/chat/room/" + chatRoom.getId(),
             messagingTemplate.convertAndSend("/api/chat/room/{userId}" + chatRoom.getId(),
                     ChatMessageResponseDto.createFrom(
-                            messageRepository.save(ChatMessage.createOutOf(id, user))
+                            messageRepository.save(ChatMessage.createOutOf(roomId, user))
                     )
             );
         }

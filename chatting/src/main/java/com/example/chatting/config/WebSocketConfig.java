@@ -17,6 +17,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     private final StompHandler stompHandler;
 
+    // 참고 블로그 https://hyeooona825.tistory.com/89
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         // 메시지 구독 요청의 prefix -> /sub로 시작하도록 설정

@@ -31,7 +31,7 @@ public class ChatMessage extends CreationDate {
     @Column(nullable = false)
     private String message;
 
-    @Column(nullable = false)
+    @Column
     private String type;
 
     @Column(nullable = false)
