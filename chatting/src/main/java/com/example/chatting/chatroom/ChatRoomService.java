@@ -31,6 +31,7 @@ public class ChatRoomService {
     private final ChatMessage chatMessage;
     private final SimpMessageSendingOperations messagingTemplate;
     private final UserRepository userRepository;
+    private final ChatMessageRepository chatMessageRepository;
 
     // 채팅방 만들기
     @Transactional
@@ -80,8 +81,17 @@ public class ChatRoomService {
 
         if (chatRoom.getRequester().getId().equals(userId)) {
             chatRoom.reqOut(true);
+
+            System.out.println("요청자가 나감 = " );
+            chatMessageRepository.TypeChatMessage(roomId, userId);
+
         } else if (chatRoom.getAcceptor().getId().equals(userId)) {
             chatRoom.accOut(true);
+
+            System.out.println("acc가 나감 = " );
+
+            chatMessageRepository.TypeChatMessage(roomId, userId);
+
         } else {
             throw new CustomException(EXIT_INVAILED);
         }

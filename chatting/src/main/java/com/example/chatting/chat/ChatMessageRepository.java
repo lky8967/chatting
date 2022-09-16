@@ -26,6 +26,13 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
     @Query("UPDATE ChatMessage msg SET msg.isRead = true WHERE msg.roomId = :roomId AND msg.senderId <> :userId AND msg.isRead = false ")
     void updateChatMessage(Long roomId, Long userId);
 
+    // 채팅 메시지 TALK 에서 OUT으로 바꾸기
+    @Modifying
+    @Transactional
+//    @Query("UPDATE ChatMessage msg SET msg.type = 'OUT' WHERE msg.roomId = :roomId AND msg.senderId <> :userId AND msg.type = 'TALK' ")
+    @Query("UPDATE ChatMessage SET type = 'OUT' WHERE type = 'TALK' ")
+    void TypeChatMessage(Long roomId, Long userId);
+
     ChatRoom findByRoomId(Long roomId);
 }
 

@@ -79,7 +79,7 @@ public class ChatMessage extends CreationDate {
         message.senderName = user.getUsername();
         message.message = user.getNickname()  + "님이 채팅방을 나갔습니다.";
         message.isRead = true;
-//        message.type = "STATUS";
+        message.type = "OUT";
 
         return message;
     }
