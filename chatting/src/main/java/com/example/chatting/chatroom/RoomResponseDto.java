@@ -20,6 +20,9 @@ public class RoomResponseDto {
     private String yourNickname;
     private String myNickname;
     private String message;
+    private String ACCEPTOR;
+    private String REQUESTER;
+
     private LocalDateTime date;
 //    private Boolean isRead;
     private Boolean isBanned;
@@ -39,6 +42,8 @@ public class RoomResponseDto {
         responseDto.yourNickname = dto.getAccNickname();
         responseDto.date = dto.getDate();
 //        responseDto.isRead = dto.getIsRead();
+        responseDto.ACCEPTOR = dto.getAccNickname();
+        responseDto.REQUESTER = dto.getReqNickname();
 
         switch ( flag ) {
 
