@@ -15,10 +15,10 @@ import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.RE
 public class RoomResponseDto {
 
     private Long roomId;
-    private Long acceptorUserId;
-    private Long requesterUserId;
-    private String acceptorNickname;
-    private String requesterUserNickname;
+    private Long yourId;
+    private Long myId;
+    private String yourNickname;
+    private String myNickname;
     private String message;
     private LocalDateTime date;
 //    private Boolean isRead;
@@ -35,23 +35,23 @@ public class RoomResponseDto {
 //        responseDto.type = type;
         responseDto.roomId = dto.getRoomId();
         responseDto.message = dto.getMessage();
-        responseDto.acceptorUserId = dto.getAccId();
-        responseDto.acceptorNickname = dto.getAccNickname();
+        responseDto.yourId = dto.getAccId();
+        responseDto.yourNickname = dto.getAccNickname();
         responseDto.date = dto.getDate();
 //        responseDto.isRead = dto.getIsRead();
 
         switch ( flag ) {
 
-            case ACCEPTOR:
+            case "ACCEPTOR":
 
-                responseDto.requesterUserId = dto.getReqId();
-                responseDto.requesterUserNickname = dto.getReqNickname();
+                responseDto.myId = dto.getReqId();
+                responseDto.myNickname = dto.getReqNickname();
                 break;
 
-            case REQUESTER:
+            case "REQUESTER":
 
-                responseDto.acceptorUserId = dto.getAccId();
-                responseDto.acceptorNickname = dto.getAccNickname();
+                responseDto.yourId = dto.getAccId();
+                responseDto.yourNickname = dto.getAccNickname();
                 break;
 
             default: break;

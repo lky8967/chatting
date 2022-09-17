@@ -132,18 +132,18 @@ public class ChatRoomService {
                 if (!dto.getAccOut()) { // 만약 Acc(내)가 나가지 않았다면
                     int unreadCnt = messageRepository.countMsg(dto.getReqId(), dto.getRoomId());
                     if (dto.getAccFixed()) {
-                        prefix.add(RoomResponseDto.createOf(ACCEPTOR, dto, unreadCnt, false));
+                        prefix.add(RoomResponseDto.createOf("ACCEPTOR", dto, unreadCnt, false));
                     } else {
-                        suffix.add(RoomResponseDto.createOf(ACCEPTOR, dto, unreadCnt, false));
+                        suffix.add(RoomResponseDto.createOf("ACCEPTOR", dto, unreadCnt, false));
                     }
                 }
             } else if (dto.getReqId().equals(userId)) {
                 if (!dto.getReqOut()) { // 만약 Req(내)가 나가지 않았다면
                     int unreadCnt = messageRepository.countMsg(dto.getAccId(), dto.getRoomId());
                     if (dto.getReqFixed()) {
-                        prefix.add(RoomResponseDto.createOf(REQUESTER, dto, unreadCnt, false ));
+                        prefix.add(RoomResponseDto.createOf("REQUESTER", dto, unreadCnt, false ));
                     } else {
-                        suffix.add(RoomResponseDto.createOf(REQUESTER, dto, unreadCnt, false ));
+                        suffix.add(RoomResponseDto.createOf("REQUESTER", dto, unreadCnt, false ));
                     }
                 }
             }
