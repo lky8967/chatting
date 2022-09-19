@@ -87,7 +87,7 @@ public class ChatRoomService {
         if (chatRoom.getRequester().getId().equals(userId)) {
             chatRoom.reqOut(true);
 
-            System.out.println("요청자가 나감 = " );
+            System.out.println("req가 나감 = " );
             chatMessageRepository.TypeChatMessage(roomId, userId);
 
         } else if (chatRoom.getAcceptor().getId().equals(userId)) {

@@ -23,6 +23,7 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
     // 추가적인 블로그링크 https://ozofweird.tistory.com/entry/%EC%82%BD%EC%A7%88-%ED%94%BC%ED%95%98%EA%B8%B0-Query-%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98-%EC%82%AC%EC%9A%A9%EB%B2%95
     @Modifying
     @Transactional
+    // <> 다르다
     @Query("UPDATE ChatMessage msg SET msg.isRead = true WHERE msg.roomId = :roomId AND msg.senderId <> :userId AND msg.isRead = false ")
     void updateChatMessage(Long roomId, Long userId);
 
