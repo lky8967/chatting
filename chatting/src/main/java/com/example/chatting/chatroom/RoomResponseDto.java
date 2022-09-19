@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.ACCEPTOR;
-import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.REQUESTER;
+//import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.ACCEPTOR;
+//import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.REQUESTER;
 
 
 @Getter
@@ -20,8 +20,11 @@ public class RoomResponseDto {
     private String yourNickname;
     private String myNickname;
     private String message;
-    private String ACCEPTOR;
-    private String REQUESTER;
+    private String acceptor;
+    private String requester;
+    private Long acceptorId;
+    private Long requesterId;
+
 
     private LocalDateTime date;
 //    private Boolean isRead;
@@ -29,38 +32,41 @@ public class RoomResponseDto {
     private int unreadCnt;
 //    private String type;
 
-    public static RoomResponseDto createOf( String flag, RoomDto dto, int unreadCnt, Boolean isBanned){
+//    public static RoomResponseDto createOf( String flag, RoomDto dto, int unreadCnt, Boolean isBanned){
+    public static RoomResponseDto createOf( RoomDto dto, int unreadCnt, Boolean isBanned){
 
         RoomResponseDto responseDto = new RoomResponseDto();
 
         responseDto.isBanned = isBanned;
         responseDto.unreadCnt = unreadCnt;
-//        responseDto.type = type;
         responseDto.roomId = dto.getRoomId();
         responseDto.message = dto.getMessage();
         responseDto.yourId = dto.getAccId();
         responseDto.yourNickname = dto.getAccNickname();
+        responseDto.myId = dto.getReqId();
+        responseDto.myNickname = dto.getReqNickname();
         responseDto.date = dto.getDate();
-//        responseDto.isRead = dto.getIsRead();
-        responseDto.ACCEPTOR = dto.getAccNickname();
-        responseDto.REQUESTER = dto.getReqNickname();
+        responseDto.acceptor = dto.getAccNickname();
+        responseDto.requester = dto.getReqNickname();
+        responseDto.acceptorId = dto.getAccId();
+        responseDto.requesterId = dto.getReqId();
 
-        switch ( flag ) {
-
-            case "ACCEPTOR":
-
-                responseDto.myId = dto.getReqId();
-                responseDto.myNickname = dto.getReqNickname();
-                break;
-
-            case "REQUESTER":
-
-                responseDto.yourId = dto.getAccId();
-                responseDto.yourNickname = dto.getAccNickname();
-                break;
-
-            default: break;
-        }
+//        switch ( flag ) {
+//
+//            case "ACCEPTOR":
+//
+//                responseDto.myId = dto.getReqId();
+//                responseDto.myNickname = dto.getReqNickname();
+//                break;
+//
+//            case "REQUESTER":
+//
+//                responseDto.yourId = dto.getAccId();
+//                responseDto.yourNickname = dto.getAccNickname();
+//                break;
+//
+//            default: break;
+//        }
 
         return responseDto;
     }

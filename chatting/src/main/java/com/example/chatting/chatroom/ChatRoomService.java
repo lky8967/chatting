@@ -5,7 +5,11 @@ package com.example.chatting.chatroom;
 import com.example.chatting.chat.ChatMessage;
 import com.example.chatting.chat.ChatMessageRepository;
 import com.example.chatting.chat.ChatMessageResponseDto;
+import com.example.chatting.chatroom.banned.BannedRepository;
+import com.example.chatting.chatroom.banned.BannedUser;
+import com.example.chatting.chatroom.banned.BannedUserDto;
 import com.example.chatting.exception.CustomException;
+import com.example.chatting.security.UserDetailsImpl;
 import com.example.chatting.user.User;
 import com.example.chatting.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +20,8 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.ACCEPTOR;
-import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.REQUESTER;
+//import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.ACCEPTOR;
+//import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.REQUESTER;
 import static com.example.chatting.exception.ErrorCode.*;
 
 
@@ -32,6 +36,7 @@ public class ChatRoomService {
     private final SimpMessageSendingOperations messagingTemplate;
     private final UserRepository userRepository;
     private final ChatMessageRepository chatMessageRepository;
+    private final BannedRepository bannedRepository;
 
     // 채팅방 만들기
     @Transactional
@@ -132,18 +137,22 @@ public class ChatRoomService {
                 if (!dto.getAccOut()) { // 만약 Acc(내)가 나가지 않았다면
                     int unreadCnt = messageRepository.countMsg(dto.getReqId(), dto.getRoomId());
                     if (dto.getAccFixed()) {
-                        prefix.add(RoomResponseDto.createOf("ACCEPTOR", dto, unreadCnt, false));
+//                        prefix.add(RoomResponseDto.createOf("ACCEPTOR", dto, unreadCnt, false));
+                        prefix.add(RoomResponseDto.createOf(dto, unreadCnt, false));
                     } else {
-                        suffix.add(RoomResponseDto.createOf("ACCEPTOR", dto, unreadCnt, false));
+                        suffix.add(RoomResponseDto.createOf( dto, unreadCnt, false));
+//                        suffix.add(RoomResponseDto.createOf("ACCEPTOR", dto, unreadCnt, false));
                     }
                 }
             } else if (dto.getReqId().equals(userId)) {
                 if (!dto.getReqOut()) { // 만약 Req(내)가 나가지 않았다면
                     int unreadCnt = messageRepository.countMsg(dto.getAccId(), dto.getRoomId());
                     if (dto.getReqFixed()) {
-                        prefix.add(RoomResponseDto.createOf("REQUESTER", dto, unreadCnt, false ));
+                        prefix.add(RoomResponseDto.createOf( dto, unreadCnt, false ));
+//                        prefix.add(RoomResponseDto.createOf("REQUESTER", dto, unreadCnt, false ));
                     } else {
-                        suffix.add(RoomResponseDto.createOf("REQUESTER", dto, unreadCnt, false ));
+//                        suffix.add(RoomResponseDto.createOf("REQUESTER", dto, unreadCnt, false ));
+                        suffix.add(RoomResponseDto.createOf( dto, unreadCnt, false ));
                     }
                 }
             }
@@ -152,20 +161,71 @@ public class ChatRoomService {
         return prefix;
     }
 
-    public enum UserTypeEnum {
-        ACCEPTOR(Type.ACCEPTOR),
-        REQUESTER(Type.REQUESTER);
+    // 회원 차단 기능
+    public void setBanned(UserDetailsImpl userDetails, Long bannedId){
 
-        private final String userType;
+        User user = userRepository.findById(userDetails.getUserId())
+                .orElseThrow(() -> new CustomException(NOT_FOUND_REQUESTER)
+                );
+        User bannedUser = userRepository.findById(bannedId)
+                .orElseThrow(() -> new CustomException(NOT_FOUND_USER)
+                );
 
-        UserTypeEnum(String userType) {
-            this.userType = userType;
-        }
+        BannedUser banned = bannedRepository.findByUserAndBannedUser(user, bannedUser).orElse(null);
 
-        public static class Type {
-            public static final String ACCEPTOR = "ACCEPTOR";
-            public static final String REQUESTER = "REQUESTER";
+        if ( banned == null ) {
+            bannedRepository.save(BannedUser.createOf(user, bannedUser));
+        } else {
+            throw new CustomException(ALREADY_BANNED);
         }
     }
+
+    // 차단 회원 불러오기
+    public List<BannedUserDto> getBanned(UserDetailsImpl userDetails){
+        User user = userRepository
+                .findById(userDetails.getUserId())
+                .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+        List<User> bannedUsers = bannedRepository.findAllMyBannedByUser(user);
+
+        List<BannedUserDto> userDtos = new ArrayList<>();
+
+        for (User banndUser : bannedUsers){ userDtos.add(BannedUserDto.createFrom(banndUser)); }
+
+        return userDtos;
+    }
+
+    // 회원 차단 풀기
+    @Transactional
+    public void unblock(UserDetailsImpl userDetails, Long bannedId){
+
+        User user = userRepository.findById(userDetails.getUserId())
+                .orElseThrow(() -> new CustomException(NOT_FOUND_REQUESTER)
+                );
+        User bannedUser = userRepository.findById(bannedId)
+                .orElseThrow(() -> new CustomException(NOT_FOUND_USER)
+                );
+        System.out.println("bannedId = " + bannedId);
+        bannedRepository.deleteById(bannedId);
+//        BannedUser banned = bannedRepository.findByUserAndBannedUser(user, bannedUser)
+//                .orElseThrow(() -> new CustomException(NOT_FOUND_BANNED));
+
+//        banned.unblock();
+    }
+
+//    public enum UserTypeEnum {
+//        ACCEPTOR(Type.ACCEPTOR),
+//        REQUESTER(Type.REQUESTER);
+//
+//        private final String userType;
+//
+//        UserTypeEnum(String userType) {
+//            this.userType = userType;
+//        }
+//
+//        public static class Type {
+//            public static final String ACCEPTOR = "ACCEPTOR";
+//            public static final String REQUESTER = "REQUESTER";
+//        }
+//    }
 }
 

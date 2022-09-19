@@ -3,6 +3,7 @@ package com.example.chatting.chatroom;
 
 import com.example.chatting.chat.ChatMessageResponseDto;
 import com.example.chatting.chat.ChatMessageService;
+import com.example.chatting.chatroom.banned.BannedUserDto;
 import com.example.chatting.exception.OkDto;
 import com.example.chatting.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -77,36 +78,28 @@ public class ChatRoomController {
         return ResponseEntity.ok().body(OkDto.valueOf("true"));
     }
 
-    // 채팅 즐겨찾기 고정
-//    @PutMapping("/api/room/{roomId}")
-//    public ResponseEntity<OkDto> fixedRoom(@AuthenticationPrincipal UserDetailsImpl userDetails,
-//                                           @PathVariable Long roomId) {
-//
-//        roomService.fixedRoom(roomId, userDetails);
-//        return ResponseEntity.ok().body(OkDto.valueOf("true"));
-//    }
 
     // 채팅 차단하기
-//    @GetMapping("/api/room/banned/{userId}")
-//    public ResponseEntity<OkDto> setBanned(@AuthenticationPrincipal UserDetailsImpl userDetails,
-//                                           @PathVariable Long userId) {
-//
-//        roomService.setBanned(userDetails, userId);
-//        return ResponseEntity.ok().body(OkDto.valueOf("true"));
-//    }
+    @GetMapping("/api/room/banned/{userId}")
+    public ResponseEntity<OkDto> setBanned(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                           @PathVariable Long userId) {
+
+        roomService.setBanned(userDetails, userId);
+        return ResponseEntity.ok().body(OkDto.valueOf("true"));
+    }
 
     // 차단 유저 목록 보기
-//    @GetMapping("/api/room/banned")
-//    public List<BannedUserDto> getBanned(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-//        return roomService.getBanned(userDetails);
-//    }
+    @GetMapping("/api/room/banned")
+    public List<BannedUserDto> getBanned(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return roomService.getBanned(userDetails);
+    }
 
     // 차단 유저 해제하기
-//    @PutMapping("/api/room/banned/{userId}")
-//    public ResponseEntity<OkDto> releaseBanned(@AuthenticationPrincipal UserDetailsImpl userDetails,
-//                                               @PathVariable Long userId) {
-//
-//        roomService.releaseBanned(userDetails, userId);
-//        return ResponseEntity.ok().body(OkDto.valueOf("true"));
-//    }
+    @DeleteMapping("/api/room/banned/{userId}")
+    public ResponseEntity<OkDto>unblock(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                               @PathVariable Long userId) {
+
+        roomService.unblock(userDetails, userId);
+        return ResponseEntity.ok().body(OkDto.valueOf("true"));
+    }
 }
