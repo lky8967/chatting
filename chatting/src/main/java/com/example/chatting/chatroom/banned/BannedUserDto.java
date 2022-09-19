@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BannedUserDto {
 
-    private Long userId;
+    private Long bannedId;
     private String nickname;
     private String profile;
 
     public static BannedUserDto createFrom(BannedUser banndedUser) {
 
         BannedUserDto dto = new BannedUserDto();
-        dto.userId = banndedUser.getId();
+        dto.bannedId = banndedUser.getId();
         dto.nickname = banndedUser.getBannedUser().getNickname();
         dto.profile = banndedUser.getBannedUser().getUserImgUrl();
 
