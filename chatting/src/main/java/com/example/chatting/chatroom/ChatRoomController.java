@@ -95,11 +95,11 @@ public class ChatRoomController {
     }
 
     // 차단 유저 해제하기
-    @DeleteMapping("/api/room/banned/{userId}")
+    @DeleteMapping("/api/room/banned/{bannedId}")
     public ResponseEntity<OkDto>unblock(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                               @PathVariable Long userId) {
+                                               @PathVariable Long bannedId) {
 
-        roomService.unblock(userDetails, userId);
+        roomService.unblock(userDetails, bannedId);
         return ResponseEntity.ok().body(OkDto.valueOf("true"));
     }
 }

@@ -26,7 +26,7 @@ public class BannedUser {
     @Column(nullable = false)
     private Boolean isBanned;
 
-    public void unblock(){}
+    public void unblock(){ this.isBanned = false; }
 
     public static BannedUser createOf(User user, User bannedUser) {
 

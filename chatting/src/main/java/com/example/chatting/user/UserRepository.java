@@ -10,6 +10,5 @@ public interface UserRepository extends JpaRepository<User , Long> {
     Optional<User> findByUsername(String username);
     Optional<User> findByNickname(String nickname);
     @Query(value = "SELECT * FROM users WHERE user_id order by rand() limit 0, 5" , nativeQuery = true)
-//    @Query("SELECT u FROM User u")
     List<User> findAllById();
 }

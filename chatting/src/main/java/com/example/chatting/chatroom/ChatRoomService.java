@@ -182,14 +182,16 @@ public class ChatRoomService {
 
     // 차단 회원 불러오기
     public List<BannedUserDto> getBanned(UserDetailsImpl userDetails){
-        User user = userRepository
-                .findById(userDetails.getUserId())
+        User user = userRepository.findById(userDetails.getUserId())
                 .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
-        List<User> bannedUsers = bannedRepository.findAllMyBannedByUser(user);
 
+//        List<User> bannedUsers = bannedRepository.findAllMyBannedByUser(user);
+        List<BannedUser> bannedUsers = bannedRepository.findAllMyBannedByUser(user);
         List<BannedUserDto> userDtos = new ArrayList<>();
 
-        for (User banndUser : bannedUsers){ userDtos.add(BannedUserDto.createFrom(banndUser)); }
+        for (BannedUser banndUser : bannedUsers){
+            userDtos.add(BannedUserDto.createFrom(banndUser));
+        }
 
         return userDtos;
     }

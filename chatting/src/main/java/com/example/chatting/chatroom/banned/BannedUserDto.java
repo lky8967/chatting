@@ -13,12 +13,12 @@ public class BannedUserDto {
     private String nickname;
     private String profile;
 
-    public static BannedUserDto createFrom(User banndedUser) {
+    public static BannedUserDto createFrom(BannedUser banndedUser) {
 
         BannedUserDto dto = new BannedUserDto();
         dto.userId = banndedUser.getId();
-        dto.nickname = banndedUser.getNickname();
-        dto.profile = banndedUser.getUserImgUrl();
+        dto.nickname = banndedUser.getBannedUser().getNickname();
+        dto.profile = banndedUser.getBannedUser().getUserImgUrl();
 
         return dto;
     }
