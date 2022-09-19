@@ -30,7 +30,8 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
     @Modifying
     @Transactional
 //    @Query("UPDATE ChatMessage msg SET msg.type = 'OUT' WHERE msg.roomId = :roomId AND msg.senderId <> :userId AND msg.type = 'TALK' ")
-    @Query("UPDATE ChatMessage SET type = 'OUT' WHERE type = 'TALK' ")
+    @Query("UPDATE ChatMessage SET type = 'OUT' WHERE roomId = :roomId AND senderId = :userId AND type = 'TALK' ")
+//    @Query("UPDATE ChatMessage SET type = 'OUT' WHERE type = 'TALK' ")
     void TypeChatMessage(Long roomId, Long userId);
 
     ChatRoom findByRoomId(Long roomId);
