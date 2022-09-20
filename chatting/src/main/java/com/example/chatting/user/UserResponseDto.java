@@ -13,6 +13,8 @@ public class UserResponseDto {
     private String nickname;
     private String userImgUrl;
     private String introduction;
+    private String isBanned;
+
 
     public UserResponseDto(User user) {
         this.id = user.getId();
