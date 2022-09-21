@@ -1,6 +1,7 @@
 package com.example.chatting.chatroom.sse;
 
 import com.example.chatting.user.User;
+import com.example.chatting.utils.TimeStamp;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter @NoArgsConstructor
-public class Notification {
+public class Notification extends TimeStamp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

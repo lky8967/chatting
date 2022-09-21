@@ -35,6 +35,7 @@ public class SseService {
         // 503 에러를 방지하기 위해 처음 연결 진행 시 더미 데이터를 전달
 
         sendNotification(emitter, eventId, emitterId, "EventStream Created. [userId=" + userId + "]");
+//        sendNotification(emitter, eventId, emitterId, "하이 수민칩님");
 
         // 클라이언트가 미수신한 Event 목록이 존재할 경우 전송하여 Event 유실을 예방
         if (hasLostData(lastEventId)) {
