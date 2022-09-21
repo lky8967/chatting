@@ -90,6 +90,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     configuration.setAllowCredentials(true);
                     configuration.addAllowedOrigin("http://localhost:3000");
                     configuration.setAllowCredentials(true);
+                    configuration.addAllowedOrigin("http://mychatting.s3-website.ap-northeast-2.amazonaws.com/");
+                    configuration.setAllowCredentials(true);
                     configuration.addAllowedMethod("*");
                     configuration.addAllowedHeader("*");
 //                    configuration.addExposedHeader("*");
