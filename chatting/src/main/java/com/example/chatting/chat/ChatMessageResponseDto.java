@@ -24,6 +24,10 @@ public class ChatMessageResponseDto {
     private String ReqType;
 
     private String img;
+    private Long acceptorId;
+//    private String acceptorName;
+//    private String acceptorNickname;
+
 
     public ChatMessageResponseDto(ChatMessageRequestDto messageRequestDto) {
 //        this.messageId = Long.valueOf(messageRequestDto.getMessage());
@@ -33,6 +37,8 @@ public class ChatMessageResponseDto {
         this.isRead = messageRequestDto.getIsRead();
         this.AccType = messageRequestDto.getAccType();
         this.ReqType = messageRequestDto.getReqType();
+
+        this.acceptorId = messageRequestDto.getAcceptorId();
 
     }
 
@@ -47,6 +53,8 @@ public class ChatMessageResponseDto {
         responseDto.AccType = message.getAccType();
         responseDto.ReqType = message.getReqType();
         responseDto.senderNickname = nickname;
+
+        responseDto.acceptorId = message.getAcceptorId();
 
         return responseDto;
     }
@@ -64,6 +72,8 @@ public class ChatMessageResponseDto {
         responseDto.isRead = message.getIsRead();
         responseDto.senderName = message.getSenderName();
         responseDto.senderNickname = message.getSenderNickname();
+
+        responseDto.acceptorId = message.getAcceptorId();
 
         return responseDto;
 

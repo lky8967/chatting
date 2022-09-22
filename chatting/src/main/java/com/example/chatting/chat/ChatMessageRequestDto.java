@@ -20,4 +20,5 @@ public class ChatMessageRequestDto {
     private String AccType;
     private String ReqType;
     private Boolean isRead;
+    private Long acceptorId;
 }
