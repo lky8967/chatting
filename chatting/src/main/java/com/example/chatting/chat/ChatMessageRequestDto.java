@@ -17,6 +17,7 @@ public class ChatMessageRequestDto {
     private Long senderId;
     private String nickname;
     private String message;
-    private String type;
+    private String AccType;
+    private String ReqType;
     private Boolean isRead;
 }

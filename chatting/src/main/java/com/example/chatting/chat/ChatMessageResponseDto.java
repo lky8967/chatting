@@ -19,18 +19,20 @@ public class ChatMessageResponseDto {
     private String senderNickname;
     private String message;
     private LocalDateTime date;
-    private Boolean isRead = false;
-    private String type;
+    private Boolean isRead ;
+    private String AccType;
+    private String ReqType;
 
     private String img;
 
     public ChatMessageResponseDto(ChatMessageRequestDto messageRequestDto) {
-        this.messageId = Long.valueOf(messageRequestDto.getMessage());
+//        this.messageId = Long.valueOf(messageRequestDto.getMessage());
         this.senderId = messageRequestDto.getSenderId();
         this.senderNickname = messageRequestDto.getNickname();
         this.message = messageRequestDto.getMessage();
         this.isRead = messageRequestDto.getIsRead();
-        this.type = messageRequestDto.getType();
+        this.AccType = messageRequestDto.getAccType();
+        this.ReqType = messageRequestDto.getReqType();
 
     }
 
@@ -42,7 +44,8 @@ public class ChatMessageResponseDto {
         responseDto.messageId = message.getId();
         responseDto.message = message.getMessage();
         responseDto.date = message.getCreatedAt();
-        responseDto.type = message.getType();
+        responseDto.AccType = message.getAccType();
+        responseDto.ReqType = message.getReqType();
         responseDto.senderNickname = nickname;
 
         return responseDto;
@@ -56,9 +59,9 @@ public class ChatMessageResponseDto {
         responseDto.messageId = message.getId();
         responseDto.message = message.getMessage();
         responseDto.date = message.getCreatedAt();
-//        responseDto.type = "OUT";
-        responseDto.type = message.getType();
-        responseDto.isRead = true;
+        responseDto.AccType = message.getAccType();
+        responseDto.ReqType = message.getReqType();
+        responseDto.isRead = message.getIsRead();
         responseDto.senderName = message.getSenderName();
         responseDto.senderNickname = message.getSenderNickname();
 
