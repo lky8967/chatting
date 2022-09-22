@@ -2,6 +2,7 @@ package com.example.chatting.chat;
 
 import com.example.chatting.chatroom.ChatRoom;
 import com.example.chatting.chatroom.ChatRoomRepository;
+import com.example.chatting.chatroom.sse.SseService;
 import com.example.chatting.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -20,6 +21,7 @@ public class ChatMessageService {
     private final SimpMessageSendingOperations messagingTemplate;
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
+    private final SseService sseService;
 
     // 메시지 DB 저장
     public ChatMessageResponseDto saveMessage(ChatMessageRequestDto requestDto, String username, String nickname) {
@@ -33,7 +35,6 @@ public class ChatMessageService {
         chatRoom.accOut(false);
         chatRoom.reqOut(false);
 
-        System.out.println("chatRoomchatRoomchatRoomchatRoomchatRoomchatRoomchatRoomchatRoomchatRoom = " + chatRoom);
 
         User receiver = chatRoom.getAcceptor();
         User sender = chatRoom.getRequester();
@@ -41,8 +42,8 @@ public class ChatMessageService {
         // pub -> 채널 구독자에게 전달
 //        redisMessagePublisher.publish(requestDto);
         // 알림 보내기
-//        notificationService.send(receiver);
-//        notificationService.sender(sender);
+        sseService.send(receiver);
+        sseService.sender(sender);
 
         return ChatMessageResponseDto.createOf(message, username , nickname);
 
