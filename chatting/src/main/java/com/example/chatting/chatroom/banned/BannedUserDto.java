@@ -1,7 +1,6 @@
 package com.example.chatting.chatroom.banned;
 
 
-import com.example.chatting.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

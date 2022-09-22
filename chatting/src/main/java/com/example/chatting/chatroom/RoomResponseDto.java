@@ -1,10 +1,12 @@
 package com.example.chatting.chatroom;
 
 
+import com.example.chatting.chatroom.banned.BannedUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 //import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.ACCEPTOR;
 //import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.REQUESTER;
@@ -33,7 +35,7 @@ public class RoomResponseDto {
 //    private String type;
 
 //    public static RoomResponseDto createOf( String flag, RoomDto dto, int unreadCnt, Boolean isBanned){
-    public static RoomResponseDto createOf( RoomDto dto, int unreadCnt, Boolean isBanned){
+    public static RoomResponseDto createOf(RoomDto dto, int unreadCnt, Boolean isBanned){
 
         RoomResponseDto responseDto = new RoomResponseDto();
 

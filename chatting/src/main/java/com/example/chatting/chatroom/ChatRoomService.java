@@ -142,7 +142,14 @@ public class ChatRoomService {
         List<RoomResponseDto> prefix = new ArrayList<>();
         List<RoomResponseDto> suffix = new ArrayList<>();
 
+
         for (RoomDto dto : roomDtos) {
+
+
+            User user = userRepository.findById(userId).orElseThrow(
+                    () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
+            );
+
             System.out.println("dto.getAccId() = " + dto.getAccId());
             System.out.println("dto.getReqId() = " + dto.getReqId());
             // 해당 방의 유저가 나가지 않았을 경우에는 배열에 포함해 줍니다.
@@ -150,8 +157,7 @@ public class ChatRoomService {
                 if (!dto.getAccOut()) { // 만약 Acc(내)가 나가지 않았다면
                     int unreadCnt = messageRepository.countMsg(dto.getReqId(), dto.getRoomId());
 
-                    Boolean isBanned = bannedRepository.existsById(dto.getReqId());
-//                    Boolean isBanned = bannedRepository.existsById(dto.getAccId());
+                    Boolean isBanned = bannedRepository.existsByBannedUserIdAndUser(dto.getReqId(), user);
                     System.out.println("isBanned1 = " + isBanned);
 
                     if (dto.getAccFixed()){
@@ -164,8 +170,7 @@ public class ChatRoomService {
                 if (!dto.getReqOut()) { // 만약 Req(내)가 나가지 않았다면
                     int unreadCnt = messageRepository.countMsg(dto.getAccId(), dto.getRoomId());
 
-                    Boolean isBanned = bannedRepository.existsById(dto.getAccId());
-//                    Boolean isBanned = bannedRepository.existsById(dto.getAccId());
+                    Boolean isBanned = bannedRepository.existsByBannedUserIdAndUser(dto.getAccId(), user);
                     System.out.println("isBanned2 = " + isBanned);
 
                     if (dto.getReqFixed()){
