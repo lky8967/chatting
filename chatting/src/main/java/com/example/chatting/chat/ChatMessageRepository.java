@@ -30,12 +30,17 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
     // 채팅 메시지 TALK 에서 OUT으로 바꾸기
     @Modifying
     @Transactional
-//    @Query("UPDATE ChatMessage msg SET msg.type = 'OUT' WHERE msg.roomId = :roomId AND msg.senderId <> :userId AND msg.type = 'TALK' ")
-    @Query("UPDATE ChatMessage SET type = 'OUT' WHERE roomId = :roomId AND senderId = :userId AND type = 'TALK' ")
-//    @Query("UPDATE ChatMessage SET type = 'OUT' WHERE type = 'TALK' ")
-    void TypeChatMessage(Long roomId, Long userId);
+    @Query("UPDATE ChatMessage SET AccType = 'OUT' WHERE roomId = :roomId AND AccType = 'TALK' ")
+//    @Query("UPDATE ChatMessage SET AccType = 'OUT' WHERE roomId = :roomId AND senderId = :userId AND AccType = 'TALK' ")
+//    void TypeChatAccMessage(Long roomId, Long userId);
+    void TypeChatAccMessage(Long roomId);
 
-    ChatRoom findByRoomId(Long roomId);
+    @Modifying
+    @Transactional
+    @Query("UPDATE ChatMessage SET ReqType = 'OUT' WHERE roomId = :roomId AND ReqType = 'TALK' ")
+//    @Query("UPDATE ChatMessage SET ReqType = 'OUT' WHERE roomId = :roomId AND senderId = :userId AND ReqType = 'TALK' ")
+    void TypeChatReqMessage(Long roomId);
+//    void TypeChatReqMessage(Long roomId, Long userId);
 }
 
 

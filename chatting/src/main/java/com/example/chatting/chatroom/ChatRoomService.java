@@ -1,7 +1,5 @@
 package com.example.chatting.chatroom;
 
-
-
 import com.example.chatting.chat.ChatMessage;
 import com.example.chatting.chat.ChatMessageRepository;
 import com.example.chatting.chat.ChatMessageResponseDto;
@@ -20,8 +18,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-//import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.ACCEPTOR;
-//import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.REQUESTER;
 import static com.example.chatting.exception.ErrorCode.*;
 
 
@@ -31,8 +27,6 @@ public class ChatRoomService {
 
     private final ChatRoomRepository roomRepository;
     private final ChatMessageRepository messageRepository;
-
-    private final ChatMessage chatMessage;
     private final SimpMessageSendingOperations messagingTemplate;
     private final UserRepository userRepository;
     private final ChatMessageRepository chatMessageRepository;
@@ -53,6 +47,11 @@ public class ChatRoomService {
         User requester = userRepository.findById(requesterId)
                 .orElseThrow( () -> new CustomException(NOT_FOUND_USER)
                 );
+        // 채팅방 차단 회원인지 검색
+//        if (bannedRepository.existsByUser(acceptor, requester)) {
+//            throw new CustomException(CHAT_USER_BANNED);
+//        }
+
         // 채팅방을 찾아보고, 없을 시 DB에 채팅방 저장
         ChatRoom chatRoom = roomRepository.findByUser(requester, acceptor)
                 .orElseGet( () -> {
@@ -66,7 +65,7 @@ public class ChatRoomService {
 //                    );
                     return c;
                 });
-//        chatRoom.enter(); // 채팅방에 들어간 상태로 변경 -> 람다를 사용해 일괄처리할 방법이 있는지 연구해 보도록 합니다.
+        chatRoom.enter(); // 채팅방에 들어간 상태로 변경 -> 람다를 사용해 일괄처리할 방법이 있는지 연구해 보도록 합니다.
 
         return chatRoom.getId();
     }
@@ -88,14 +87,18 @@ public class ChatRoomService {
             chatRoom.reqOut(true);
 
             System.out.println("req가 나감 = " );
-            chatMessageRepository.TypeChatMessage(roomId, userId);
+//            chatMessageRepository.TypeChatReqMessage(roomId, userId);
+            chatMessageRepository.TypeChatReqMessage(roomId);
+//            chatMessageRepository.TypeChatAccMessage(roomId, userId);
+
 
         } else if (chatRoom.getAcceptor().getId().equals(userId)) {
             chatRoom.accOut(true);
 
             System.out.println("acc가 나감 = " );
-
-            chatMessageRepository.TypeChatMessage(roomId, userId);
+//            chatMessageRepository.TypeChatReqMessage(roomId, userId);
+//            chatMessageRepository.TypeChatAccMessage(roomId, userId);
+            chatMessageRepository.TypeChatAccMessage(roomId);
 
         } else {
             throw new CustomException(EXIT_INVAILED);
@@ -120,43 +123,65 @@ public class ChatRoomService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
         );
+
+//        // 차단회원인지 찾기
+//        BannedUser bannedUser = bannedRepository.findById(userId).orElseThrow(
+//                () -> new NullPointerException("밴한아이디가 존재 x ")
+//        );
+
+
         // 방 목록 찾기
         List<RoomDto> dtos = roomRepository.findAllWith(user);
         // 메시지 리스트 만들기
-        return getMessages(dtos, userId, nickname);
+        return findMessages(dtos ,userId);
     }
 
-    public List<RoomResponseDto> getMessages(List<RoomDto> roomDtos, Long userId , String nickname) {
+    public List<RoomResponseDto> findMessages(List<RoomDto> roomDtos, Long userId ) {
+
 
         List<RoomResponseDto> prefix = new ArrayList<>();
         List<RoomResponseDto> suffix = new ArrayList<>();
 
         for (RoomDto dto : roomDtos) {
+            System.out.println("dto.getAccId() = " + dto.getAccId());
+            System.out.println("dto.getReqId() = " + dto.getReqId());
             // 해당 방의 유저가 나가지 않았을 경우에는 배열에 포함해 줍니다.
-            if (dto.getAccId().equals(userId)) {
+            if ( dto.getAccId().equals(userId) ) {
                 if (!dto.getAccOut()) { // 만약 Acc(내)가 나가지 않았다면
                     int unreadCnt = messageRepository.countMsg(dto.getReqId(), dto.getRoomId());
-                    if (dto.getAccFixed()) {
-//                        prefix.add(RoomResponseDto.createOf("ACCEPTOR", dto, unreadCnt, false));
-                        prefix.add(RoomResponseDto.createOf(dto, unreadCnt, false));
+
+                    Boolean isBanned = bannedRepository.existsById(dto.getReqId());
+//                    Boolean isBanned = bannedRepository.existsById(dto.getAccId());
+                    System.out.println("isBanned1 = " + isBanned);
+
+                    if (dto.getAccFixed()){
+                        prefix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
                     } else {
-                        suffix.add(RoomResponseDto.createOf( dto, unreadCnt, false));
-//                        suffix.add(RoomResponseDto.createOf("ACCEPTOR", dto, unreadCnt, false));
+                        suffix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
                     }
                 }
-            } else if (dto.getReqId().equals(userId)) {
+            } else if ( dto.getReqId().equals(userId) ){
                 if (!dto.getReqOut()) { // 만약 Req(내)가 나가지 않았다면
                     int unreadCnt = messageRepository.countMsg(dto.getAccId(), dto.getRoomId());
-                    if (dto.getReqFixed()) {
-                        prefix.add(RoomResponseDto.createOf( dto, unreadCnt, false ));
-//                        prefix.add(RoomResponseDto.createOf("REQUESTER", dto, unreadCnt, false ));
+
+                    Boolean isBanned = bannedRepository.existsById(dto.getAccId());
+//                    Boolean isBanned = bannedRepository.existsById(dto.getAccId());
+                    System.out.println("isBanned2 = " + isBanned);
+
+                    if (dto.getReqFixed()){
+                        prefix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
                     } else {
-//                        suffix.add(RoomResponseDto.createOf("REQUESTER", dto, unreadCnt, false ));
-                        suffix.add(RoomResponseDto.createOf( dto, unreadCnt, false ));
+                        suffix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
                     }
                 }
             }
+
+            messageRepository.updateChatMessage(dto.getRoomId(),userId);
+
+
         }
+
+
         prefix.addAll(suffix);
         return prefix;
     }
@@ -189,6 +214,7 @@ public class ChatRoomService {
         List<BannedUser> bannedUsers = bannedRepository.findAllMyBannedByUser(user);
         List<BannedUserDto> userDtos = new ArrayList<>();
 
+
         for (BannedUser banndUser : bannedUsers){
             userDtos.add(BannedUserDto.createFrom(banndUser));
         }
@@ -210,7 +236,7 @@ public class ChatRoomService {
         bannedRepository.deleteById(bannedId);
 //        BannedUser banned = bannedRepository.findByUserAndBannedUser(user, bannedUser)
 //                .orElseThrow(() -> new CustomException(NOT_FOUND_BANNED));
-
+//
 //        banned.unblock();
     }
 
