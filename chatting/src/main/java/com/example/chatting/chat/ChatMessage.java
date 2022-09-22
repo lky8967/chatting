@@ -32,7 +32,10 @@ public class ChatMessage extends CreationDate {
     private String message;
 
     @Column
-    private String type;
+    private String AccType;
+
+    @Column
+    private String ReqType;
 
     @Column(nullable = false)
     private Boolean isRead;
@@ -52,7 +55,10 @@ public class ChatMessage extends CreationDate {
         message.roomId = requestDto.getRoomId();
         message.message = requestDto.getMessage();
         message.isRead = requestDto.getIsRead();
-        message.type = requestDto.getType();
+        message.AccType = requestDto.getAccType();
+        message.ReqType = requestDto.getReqType();
+//        message.AccType = "TALK";
+//        message.ReqType = "TALK";
 
         return message;
     }
@@ -79,8 +85,8 @@ public class ChatMessage extends CreationDate {
         message.senderName = user.getUsername();
         message.message = user.getNickname()  + "님이 채팅방을 나갔습니다.";
         message.isRead = true;
-        message.type = "OUT";
-
+        message.AccType = "STATUS";
+        message.ReqType = "STATUS";
         return message;
     }
 
