@@ -46,9 +46,9 @@ public class ChatRoomService {
         User requester = userRepository.findById(requesterId)
                 .orElseThrow( () -> new CustomException(NOT_FOUND_USER));
         // 채팅방 차단 회원인지 검색
-//        if (bannedRepository.existsByUser(acceptor, requester)) {
-//            throw new CustomException(CHAT_USER_BANNED);
-//        }
+        if (bannedRepository.existsByBannedUserAndUser(acceptor, requester)) {
+            throw new CustomException(CHAT_USER_BANNED);
+        }
 
         // 채팅방을 찾아보고, 없을 시 DB에 채팅방 저장
         ChatRoom chatRoom = roomRepository.findByUser(requester, acceptor)

@@ -11,7 +11,7 @@ public interface BannedRepository extends JpaRepository<BannedUser, Long> {
     Optional<BannedUser> findByUserAndBannedUser(User user, User bannedUser);
 
     List<BannedUser> findAllMyBannedByUser(User user);
-
+    boolean existsByBannedUserAndUser(User acceptor, User requester);
     Boolean existsByBannedUserIdAndUser(Long userId, User BannedUser);
 
 }
