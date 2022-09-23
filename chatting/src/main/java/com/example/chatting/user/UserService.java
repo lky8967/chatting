@@ -1,5 +1,6 @@
 package com.example.chatting.user;
 
+import com.example.chatting.exception.CustomException;
 import com.example.chatting.s3service.S3Service;
 import com.example.chatting.security.UserDetailsImpl;
 import com.example.chatting.validator.UserValidator;
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.example.chatting.exception.ErrorCode.NOT_FOUND_USER;
 
 @Service
 @RequiredArgsConstructor
@@ -75,9 +78,9 @@ public class UserService {
     @Transactional
     public void updateUser(MultipartFile multipartFile, ProfileUpdateRequestDto updateDto, UserDetailsImpl userDetails){
 
-        User user = userRepository.findById(userDetails.getUserId()).orElseThrow(
-                () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
-        );
+        User user = userRepository.findById(userDetails.getUserId())
+                .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+
 
     // 닉네임 중복검사용
         Optional<User> foundNickname = userRepository
@@ -144,9 +147,9 @@ public class UserService {
 
     @Transactional
     public void deleteImg(UserDetailsImpl userDetails) {
-        User user = userRepository.findById(userDetails.getUserId()).orElseThrow(
-                () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
-        );
+        User user = userRepository.findById(userDetails.getUserId())
+                .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+
         user.setUserImgUrl("");
     }
 }

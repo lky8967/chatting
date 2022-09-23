@@ -42,11 +42,9 @@ public class ChatRoomService {
         }
         // 채팅 상대 찾아오기
         User acceptor = userRepository.findById(acceptorId)
-                .orElseThrow( () -> new CustomException(NOT_FOUND_USER)
-                );
+                .orElseThrow( () -> new CustomException(NOT_FOUND_USER));
         User requester = userRepository.findById(requesterId)
-                .orElseThrow( () -> new CustomException(NOT_FOUND_USER)
-                );
+                .orElseThrow( () -> new CustomException(NOT_FOUND_USER));
         // 채팅방 차단 회원인지 검색
 //        if (bannedRepository.existsByUser(acceptor, requester)) {
 //            throw new CustomException(CHAT_USER_BANNED);
@@ -120,9 +118,8 @@ public class ChatRoomService {
     // 사용자별 채팅방 전체 목록 가져오기
     public List<RoomResponseDto> getRooms(Long userId, String nickname) {
         // 회원 찾기
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
-        );
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
 
 //        // 차단회원인지 찾기
 //        BannedUser bannedUser = bannedRepository.findById(userId).orElseThrow(
@@ -142,13 +139,10 @@ public class ChatRoomService {
         List<RoomResponseDto> prefix = new ArrayList<>();
         List<RoomResponseDto> suffix = new ArrayList<>();
 
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
 
         for (RoomDto dto : roomDtos) {
-
-
-            User user = userRepository.findById(userId).orElseThrow(
-                    () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
-            );
 
             System.out.println("dto.getAccId() = " + dto.getAccId());
             System.out.println("dto.getReqId() = " + dto.getReqId());
@@ -183,9 +177,7 @@ public class ChatRoomService {
 
             messageRepository.updateChatMessage(dto.getRoomId(),userId);
 
-
         }
-
 
         prefix.addAll(suffix);
         return prefix;
@@ -218,7 +210,6 @@ public class ChatRoomService {
 //        List<User> bannedUsers = bannedRepository.findAllMyBannedByUser(user);
         List<BannedUser> bannedUsers = bannedRepository.findAllMyBannedByUser(user);
         List<BannedUserDto> userDtos = new ArrayList<>();
-
 
         for (BannedUser banndUser : bannedUsers){
             userDtos.add(BannedUserDto.createFrom(banndUser));
