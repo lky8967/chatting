@@ -60,7 +60,7 @@ public class ChatMessageService {
         messagingTemplate.convertAndSend("/sub/api/chat/room/" + requestDto.getRoomId(), responseDto); // 채팅방 내부로 메시지 전송
     }
 
-    // 메시지 찾기, 페이징 처리
+    // 메시지 찾기
     public List<ChatMessageResponseDto> getMessage(Long roomId, Long userId , String nickname) {
 
         System.out.println("5555555555555555555555555555555555555 메시지찾기 getMessage nickname = " + nickname);

@@ -34,6 +34,7 @@ public class User {
     @Column
     private String introduction;
 
+
     public User(String username, String password, String passwordCheck, String nickname, String userImgUrl, String introduction){
         this.username = username;
         this.password = password;

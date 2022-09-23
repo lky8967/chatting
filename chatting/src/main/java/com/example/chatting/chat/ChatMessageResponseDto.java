@@ -19,7 +19,7 @@ public class ChatMessageResponseDto {
     private String senderNickname;
     private String message;
     private LocalDateTime date;
-    private Boolean isRead ;
+    private Boolean isRead = false;
     private String AccType;
     private String ReqType;
 
@@ -69,7 +69,7 @@ public class ChatMessageResponseDto {
         responseDto.date = message.getCreatedAt();
         responseDto.AccType = message.getAccType();
         responseDto.ReqType = message.getReqType();
-        responseDto.isRead = message.getIsRead();
+        responseDto.isRead = true;
         responseDto.senderName = message.getSenderName();
         responseDto.senderNickname = message.getSenderNickname();
 

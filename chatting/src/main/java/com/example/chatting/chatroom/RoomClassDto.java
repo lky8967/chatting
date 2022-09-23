@@ -21,6 +21,4 @@ public class RoomClassDto {
     private LocalDateTime date;
     private String message;
 
-
-
 }

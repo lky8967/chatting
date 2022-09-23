@@ -67,7 +67,7 @@ public class ChatMessage extends CreationDate {
 
         return message;
     }
-
+//
 //    public static ChatMessage createInitOf(Long roomId) {
 //
 //        ChatMessage message = new ChatMessage();
