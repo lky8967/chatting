@@ -18,8 +18,16 @@
 - 채팅 내용이 분 단위로 구분됨
 - 좌측 채팅목록에서 기존 채팅중이던 목록을 확인할 수 있음
 - 채팅 중 유저 채팅  
-
+<!-- 
 ![채팅](https://user-images.githubusercontent.com/59018674/182070598-098dff0a-1d85-4a7f-a543-747b73ad3874.png)
-
+ -->
 </div>
 </details>
+
+
+<br>
+
+##  API 설계
+
+[API 설계 자세히보기][(https://www.notion.so/API-3078c33df93d4bc180531687a99b2757)](https://www.notion.so/API-bcb40afa27de44408b00e50a201d08a6)
+
