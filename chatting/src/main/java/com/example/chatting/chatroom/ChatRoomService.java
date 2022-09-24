@@ -128,7 +128,7 @@ public class ChatRoomService {
 
 
         List<RoomResponseDto> prefix = new ArrayList<>();
-        List<RoomResponseDto> suffix = new ArrayList<>();
+//        List<RoomResponseDto> suffix = new ArrayList<>();
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
@@ -146,11 +146,12 @@ public class ChatRoomService {
                     Boolean isBanned = bannedRepository.existsByBannedUserIdAndUser(dto.getReqId(), user);
                     System.out.println("isBanned1 = " + isBanned);
 
-                    if (dto.getAccFixed()){
-                        prefix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
-                    } else {
-                        suffix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
-                    }
+//                    if (dto.getAccFixed()){
+//                        prefix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
+//                    } else {
+//                        suffix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
+//                    }
+                    prefix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
                 }
             } else if ( dto.getReqId().equals(userId) ){
                 if (!dto.getReqOut()) { // 만약 Req(내)가 나가지 않았다면
@@ -160,17 +161,19 @@ public class ChatRoomService {
                     Boolean isBanned = bannedRepository.existsByBannedUserIdAndUser(dto.getAccId(), user);
                     System.out.println("isBanned2 = " + isBanned);
 
-                    if (dto.getReqFixed()){
-                        prefix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
-                    } else {
-                        suffix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
-                    }
+//                    if (dto.getReqFixed()){
+//                        prefix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
+//                    } else {
+//                        suffix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
+//                    }
+
+                    prefix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
                 }
             }
-            messageRepository.updateChatMessage(dto.getRoomId(),userId);
+//            messageRepository.updateChatMessage(dto.getRoomId(),userId);
         }
 
-        prefix.addAll(suffix);
+//        prefix.addAll(suffix);
         return prefix;
     }
 
