@@ -1,16 +1,9 @@
 package com.example.chatting.chatroom;
 
-
-import com.example.chatting.chatroom.banned.BannedUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
-
-//import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.ACCEPTOR;
-//import static com.example.chatting.chatroom.ChatRoomService.UserTypeEnum.Type.REQUESTER;
-
 
 @Getter
 @NoArgsConstructor
@@ -26,15 +19,10 @@ public class RoomResponseDto {
     private String requester;
     private Long acceptorId;
     private Long requesterId;
-
-
     private LocalDateTime date;
-//    private Boolean isRead;
     private Boolean isBanned;
     private int unreadCnt;
-//    private String type;
 
-//    public static RoomResponseDto createOf( String flag, RoomDto dto, int unreadCnt, Boolean isBanned){
     public static RoomResponseDto createOf(RoomDto dto, int unreadCnt, Boolean isBanned){
 
         RoomResponseDto responseDto = new RoomResponseDto();
@@ -52,23 +40,6 @@ public class RoomResponseDto {
         responseDto.requester = dto.getReqNickname();
         responseDto.acceptorId = dto.getAccId();
         responseDto.requesterId = dto.getReqId();
-
-//        switch ( flag ) {
-//
-//            case "ACCEPTOR":
-//
-//                responseDto.myId = dto.getReqId();
-//                responseDto.myNickname = dto.getReqNickname();
-//                break;
-//
-//            case "REQUESTER":
-//
-//                responseDto.yourId = dto.getAccId();
-//                responseDto.yourNickname = dto.getAccNickname();
-//                break;
-//
-//            default: break;
-//        }
 
         return responseDto;
     }
