@@ -29,8 +29,6 @@ public class ChatMessage extends CreationDate {
     private String senderNickname;
 
     private Long acceptorId;
-    private String acceptorName;
-    private String acceptorNickname;
 
     @Column(nullable = false)
     private String message;
@@ -61,8 +59,6 @@ public class ChatMessage extends CreationDate {
         message.isRead = requestDto.getIsRead();
         message.AccType = requestDto.getAccType();
         message.ReqType = requestDto.getReqType();
-//        message.AccType = "TALK";
-//        message.ReqType = "TALK";
         message.acceptorId = requestDto.getAcceptorId();
 
         return message;

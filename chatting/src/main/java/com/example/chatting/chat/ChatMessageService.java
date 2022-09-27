@@ -57,6 +57,7 @@ public class ChatMessageService {
 //        redisMessagePublisher.publish(requestDto);
 
         messagingTemplate.convertAndSend("/sub/api/chat/rooms/" + userId, msgUpdateDto); // 개별 채팅 목록 보기 업데이트
+        //구도ㅓㄱ
         messagingTemplate.convertAndSend("/sub/api/chat/room/" + requestDto.getRoomId(), responseDto); // 채팅방 내부로 메시지 전송
     }
 

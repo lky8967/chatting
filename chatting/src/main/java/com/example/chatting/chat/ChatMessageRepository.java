@@ -37,9 +37,11 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
 
     @Modifying
     @Transactional
-    @Query("UPDATE ChatMessage SET ReqType = 'OUT' WHERE roomId = :roomId AND ReqType = 'TALK' ")
+    @Query("UPDATE ChatMessage SET ReqType = 'OUT' WHERE roomId = :roomId AND ReqType = 'TALK' " )
 //    @Query("UPDATE ChatMessage SET ReqType = 'OUT' WHERE roomId = :roomId AND senderId = :userId AND ReqType = 'TALK' ")
     void TypeChatReqMessage(Long roomId);
+
+
 //    void TypeChatReqMessage(Long roomId, Long userId);
 }
 

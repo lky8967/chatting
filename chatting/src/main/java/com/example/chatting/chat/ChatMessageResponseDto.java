@@ -25,9 +25,6 @@ public class ChatMessageResponseDto {
 
     private String img;
     private Long acceptorId;
-//    private String acceptorName;
-//    private String acceptorNickname;
-
 
     public ChatMessageResponseDto(ChatMessageRequestDto messageRequestDto) {
 //        this.messageId = Long.valueOf(messageRequestDto.getMessage());
@@ -59,6 +56,7 @@ public class ChatMessageResponseDto {
         return responseDto;
     }
 
+    // 채팅방을 나갔습니다 메시지
     public static ChatMessageResponseDto createFrom(ChatMessage message){
 
         ChatMessageResponseDto responseDto = new ChatMessageResponseDto();
@@ -69,7 +67,7 @@ public class ChatMessageResponseDto {
         responseDto.date = message.getCreatedAt();
         responseDto.AccType = message.getAccType();
         responseDto.ReqType = message.getReqType();
-        responseDto.isRead = true;
+        responseDto.isRead = message.getIsRead();
         responseDto.senderName = message.getSenderName();
         responseDto.senderNickname = message.getSenderNickname();
 
