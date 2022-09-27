@@ -56,10 +56,10 @@
 - 유저 차단 및 차단 해제 기능
 
 <br/>
-<--
+
 ## 🕹 기술 스택
 <div display=flex>
-<img alt="React" src ="https://img.shields.io/badge/React-61DAFB.svg?&style=for-the-badge&logo=React&logoColor=black"/>
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
 <img alt="HTML5" src ="https://img.shields.io/badge/HTML5-E34F26.svg?&style=for-the-badge&logo=HTML5&logoColor=white"/>
 <img alt="CSS3" src ="https://img.shields.io/badge/CSS3-1572B6.svg?&style=for-the-badge&logo=CSS3&logoColor=white"/>
@@ -77,27 +77,7 @@
 </div>
 <br/>
 
-| Name | Appliance | Version |
-| --- | --- | --- |
-| React | 리액트 | 18.2.0 |
-| Axios | HTTP 클라이언트 라이브러리 | 0.27.2 |
-| browser-image-compression | 이미지 압축 라이브러리 | 2.0.0 |
-| dotenv | 환경변수 라이브러리 | 16.0.2 |
-| Immer | 불변성 유지 | 9.0.15 |
-| moment | 날짜, 시간 출력 |2.29.4|
-| React-dom | 브라우저 렌더링 | 18.2.0 |
-| React-icons | 아이콘 | 4.4.0 |
-| React-redux | 상태관리 | 8.0.2 |
-| React-router-dom | 라우터 | 6.3.0 |
-| Redux | 상태 관리 | 4.2.0 |
-| Redux-actions | 액션 관리 | 2.6.5 |
-| Redux-thunk | 리덕스 미들웨어 |2.4.1 |
-| sockjs-client | 채팅 |4.4.1|
-| stompjs | 채팅 |4.4.1|
-| Styled-components | CSS in JS | 5.3.5 |
-| sweetalert | Alert창 | 2.1.2 |
 
--->
 ## ⚓️ Links
 **Project homepage** : http://mychatting.s3-website.ap-northeast-2.amazonaws.com/
 
