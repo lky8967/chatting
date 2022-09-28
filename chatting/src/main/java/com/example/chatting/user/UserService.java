@@ -1,5 +1,6 @@
 package com.example.chatting.user;
 
+import com.example.chatting.chatroom.banned.BannedRepository;
 import com.example.chatting.exception.CustomException;
 import com.example.chatting.s3service.S3Service;
 import com.example.chatting.security.UserDetailsImpl;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -25,7 +27,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final S3Service s3Service;
     private final UserValidator userValidator;
-//    private final BCryptPasswordEncoder encoder;
+    private final BannedRepository bannedRepository;
 
     // 회원 가입
     @Transactional
@@ -66,14 +68,33 @@ public class UserService {
         }
     }
 
-    //유저상세 페이지 , 마이 페이지
-    public UserResponseDto userInfo(Long userId) {
+    //마이 페이지
+    public UserResponseDto myPage(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
         );
         return new UserResponseDto(user);
     }
 
+    // 유저 정보 보기
+    public List<UserResponseDto> userInfo(Long userId, Long myId) {
+        User user = userRepository.findById(myId).orElseThrow(
+                () -> new NullPointerException("로그인 해주세요")
+        );
+
+        User yourUser = userRepository.findById(userId).orElseThrow(
+                () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
+        );
+        boolean bannedUser = bannedRepository.existsByUserAndBannedUser(user ,yourUser);
+
+        System.out.println("bannedUser = " + bannedUser);
+
+        List<UserResponseDto> bannedList = new ArrayList<>();
+
+        bannedList.add(UserResponseDto.bannedList(user , bannedUser));
+
+        return bannedList;
+    }
 
     @Transactional
     public void updateUser(MultipartFile multipartFile, ProfileUpdateRequestDto updateDto, UserDetailsImpl userDetails){
@@ -137,10 +158,48 @@ public class UserService {
     }
 
     // 메인페이지 유저 조회 리스트로 묶는 버전
-    public UserMainResponseDto userRandom() {
-        List<User> users = userRepository.findAllById();
+//    public List<UserMainResponseDto> userRandom(Long myId) {
+//        List<User> users = userRepository.findAllById(myId);
+////       Long userId = userRepository.findAllById(myId);
+////        List<Long> yourIdList = users.stream().map(User::getId).collect(Collectors.toList());
+//        User user = userRepository.findById(myId).orElseThrow(
+//                () -> new NullPointerException("로그인 해주세요")
+//        );
+//        List<UserMainResponseDto> result = new ArrayList<>();
+//
+//        List<Boolean> bannedList = new ArrayList<>();
+//        List<User> yourList = new ArrayList<>();
+//
+//        boolean bannedUser = false;
+//        User yourUser = new User();
+//
+//
+//        for (User yoursId : users) {
+//            Long yourId = yoursId.getId();
+//
+//            yourUser = userRepository.findById(yourId).orElseThrow(
+//                    () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
+//            );
+//
+//            bannedUser = bannedRepository.existsByUserAndBannedUser(user, yourUser);
+//
+//            bannedList.add(bannedUser);
+////            users.add(yourUser);
+//        }
+//        for(int i = 0 ; i < bannedList.size(); i++){
+//            System.out.println(bannedList.get(i));
+//            System.out.println(users.get(i).getId());
+//            UserMainResponseDto userMainResponseDto = new UserMainResponseDto(bannedList.get(i) , users.get(i).getId());
+//            result.add(userMainResponseDto);
+//        }
+//        return result;
+//    }
+
+    public UserMainResponseDto userRandom(Long myId) {
+        List<User> users = userRepository.findAllById(myId);
         List<UserResponseDto> result = users.stream()
                 .map(UserResponseDto::new)
+                .filter(x -> !x.getId().equals(myId))
                 .collect(Collectors.toList());
         return new UserMainResponseDto(result);
     }
@@ -149,7 +208,6 @@ public class UserService {
     public void deleteImg(UserDetailsImpl userDetails) {
         User user = userRepository.findById(userDetails.getUserId())
                 .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
-
         user.setUserImgUrl("");
     }
 }
