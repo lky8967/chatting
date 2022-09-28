@@ -1,10 +1,13 @@
 package com.example.chatting.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.function.Function;
 
-@Getter
+
+@Getter @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponseDto {
 
@@ -13,7 +16,7 @@ public class UserResponseDto {
     private String nickname;
     private String userImgUrl;
     private String introduction;
-    private String isBanned;
+    private Boolean isBanned ;
 
 
     public UserResponseDto(User user) {
@@ -24,5 +27,19 @@ public class UserResponseDto {
         this.introduction = user.getIntroduction();
     }
 
+
+    public static UserResponseDto bannedList(User user, boolean isBanned) {
+        
+        UserResponseDto userResponseDto = new UserResponseDto();
+
+        userResponseDto.id = user.getId();
+        userResponseDto.username = user.getUsername();
+        userResponseDto.nickname = user.getNickname();
+        userResponseDto.userImgUrl = user.getUserImgUrl();
+        userResponseDto.introduction = user.getIntroduction();
+        userResponseDto.isBanned = isBanned;
+        
+        return userResponseDto;
+    }
 
 }

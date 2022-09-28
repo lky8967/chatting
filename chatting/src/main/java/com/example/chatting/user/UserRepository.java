@@ -12,5 +12,4 @@ public interface UserRepository extends JpaRepository<User , Long> {
     @Query(value = "SELECT * FROM users WHERE user_id order by rand() limit 0, 5" , nativeQuery = true)
     List<User> findAllById(Long userId);
 
-//    Long findAllById(Long userId);
 }
