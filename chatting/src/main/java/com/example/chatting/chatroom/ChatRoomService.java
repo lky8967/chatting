@@ -127,7 +127,7 @@ public class ChatRoomService {
     public List<RoomResponseDto> findMessages(List<RoomDto> roomDtos, Long userId ) {
 
 
-        List<RoomResponseDto> prefix = new ArrayList<>();
+        List<RoomResponseDto> list = new ArrayList<>();
 //        List<RoomResponseDto> suffix = new ArrayList<>();
 
         User user = userRepository.findById(userId)
@@ -151,7 +151,7 @@ public class ChatRoomService {
 //                    } else {
 //                        suffix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
 //                    }
-                    prefix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
+                    list.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
                 }
             } else if ( dto.getReqId().equals(userId) ){
                 if (!dto.getReqOut()) { // 만약 Req(내)가 나가지 않았다면
@@ -167,14 +167,14 @@ public class ChatRoomService {
 //                        suffix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
 //                    }
 
-                    prefix.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
+                    list.add(RoomResponseDto.createOf( dto, unreadCnt, isBanned));
                 }
             }
 //            messageRepository.updateChatMessage(dto.getRoomId(),userId);
         }
 
 //        prefix.addAll(suffix);
-        return prefix;
+        return list;
     }
 
     // 회원 차단 기능
@@ -216,34 +216,20 @@ public class ChatRoomService {
     @Transactional
     public void unblock(UserDetailsImpl userDetails, Long bannedId){
 
-        User user = userRepository.findById(userDetails.getUserId())
-                .orElseThrow(() -> new CustomException(NOT_FOUND_REQUESTER)
-                );
-        User bannedUser = userRepository.findById(bannedId)
-                .orElseThrow(() -> new CustomException(NOT_FOUND_USER)
-                );
-        System.out.println("bannedId = " + bannedId);
-        bannedRepository.deleteById(bannedId);
+//        User user = userRepository.findById(userDetails.getUserId())
+//                .orElseThrow(() -> new CustomException(NOT_FOUND_REQUESTER)
+//                );
+//        User bannedUser = userRepository.findById(bannedId)
+//                .orElseThrow(() -> new CustomException(NOT_FOUND_USER)
+//                );
+//
+            bannedRepository.deleteById(bannedId);
+
 //        BannedUser banned = bannedRepository.findByUserAndBannedUser(user, bannedUser)
 //                .orElseThrow(() -> new CustomException(NOT_FOUND_BANNED));
 //
 //        banned.unblock();
     }
 
-//    public enum UserTypeEnum {
-//        ACCEPTOR(Type.ACCEPTOR),
-//        REQUESTER(Type.REQUESTER);
-//
-//        private final String userType;
-//
-//        UserTypeEnum(String userType) {
-//            this.userType = userType;
-//        }
-//
-//        public static class Type {
-//            public static final String ACCEPTOR = "ACCEPTOR";
-//            public static final String REQUESTER = "REQUESTER";
-//        }
-//    }
 }
 
