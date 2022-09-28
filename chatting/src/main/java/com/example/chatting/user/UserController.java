@@ -9,6 +9,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -42,15 +44,16 @@ public class UserController {
 
     // 유저 상세 페이지
     @GetMapping("/api/users/{userId}")
-    public UserResponseDto userInfo(@PathVariable Long userId){
-        return userService.userInfo(userId);
+    public List<UserResponseDto> userInfo(@PathVariable Long userId ,@AuthenticationPrincipal UserDetailsImpl userDetails){
+        Long myId = userDetails.getUserId();
+        return userService.userInfo(userId, myId);
     }
 
     // 마이 페이지
     @GetMapping("/api/users/myPage")
-    public UserResponseDto myPage( @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public UserResponseDto myPage(@AuthenticationPrincipal UserDetailsImpl userDetails){
         Long userId = userDetails.getUserId();
-        return userService.userInfo(userId);
+        return userService.myPage(userId);
     }
 
     // 유저 정보 수정
@@ -70,8 +73,9 @@ public class UserController {
 
     // 메인페이지 유저 조회 리스트로 묶는 버전
     @GetMapping("/api/users/usersRandom")
-    public UserMainResponseDto usersRandom(){
-        return userService.userRandom();
+    public UserMainResponseDto usersRandom(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        Long userId = userDetails.getUserId();
+        return userService.userRandom(userId);
     }
 
     // 유저 프로필 기본 이미지로 바꾸기
