@@ -208,6 +208,7 @@ public class UserService {
     public void deleteImg(UserDetailsImpl userDetails) {
         User user = userRepository.findById(userDetails.getUserId())
                 .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+//        userRepository.deleteImg(userDetails.getUserId());
         user.setUserImgUrl("");
     }
 }
