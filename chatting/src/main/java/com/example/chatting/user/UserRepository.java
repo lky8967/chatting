@@ -16,4 +16,8 @@ public interface UserRepository extends JpaRepository<User , Long> {
     @Modifying
     @Query("UPDATE User user SET user.userImgUrl = '' WHERE user.id = :userId ")
     void deleteImg(Long userId);
+
+    @Modifying
+    @Query("UPDATE User user SET user.userImgUrl = :userImgUrl ")
+    void updateImg(String userImgUrl);
 }

@@ -131,18 +131,15 @@ public class UserService {
 
             // 기본 이미지가 있을경우
             if(!imgUser.equals("") && multipartFile == null){
-//            if(!imgUser.equals("") && multipartFile.isEmpty()){
                 System.out.println("기본 이미지일경우");
                 userImgUrl = imgUser;
-//                UserImg profileImg = new UserImg(userImgUrl);
-//                user.setUserImgUrl(profileImg.getUserImgUrl());
-
             } else if (!imgUser.equals("") && multipartFile != null) {
                 Map<String, String> imgUrl = s3Service.uploadFile(multipartFile);
                 System.out.println("이미지 바꿀 경우");
                 userImgUrl = imgUrl.get("url");
                 UserImg profileImg = new UserImg(userImgUrl);
-                user.setUserImgUrl(profileImg.getUserImgUrl());
+                userRepository.updateImg(profileImg.getUserImgUrl());
+//                user.setUserImgUrl(profileImg.getUserImgUrl());
             }
 
             // 프로필 이미지를 직접 업로드 했을 경우
@@ -151,7 +148,8 @@ public class UserService {
                 System.out.println("이미지를 처음 올릴경우");
                 userImgUrl = imgUrl.get("url");
                 UserImg profileImg = new UserImg(userImgUrl);
-                user.setUserImgUrl(profileImg.getUserImgUrl());
+                userRepository.updateImg(profileImg.getUserImgUrl());
+//                user.setUserImgUrl(profileImg.getUserImgUrl());
             }
             user.updateUser(updateDto.getNickname(), updateDto.getIntroduction(), userImgUrl);
         }
