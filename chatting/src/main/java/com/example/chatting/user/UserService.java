@@ -193,6 +193,8 @@ public class UserService {
 //        return result;
 //    }
 
+
+    // 수리해야할곳 1
     public UserMainResponseDto userRandom(Long myId) {
         List<User> users = userRepository.findAllById(myId);
         List<UserResponseDto> result = users.stream()
