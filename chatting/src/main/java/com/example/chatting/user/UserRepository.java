@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User , Long> {
     Optional<User> findByUsername(String username);
     Optional<User> findByNickname(String nickname);
-    @Query(value = "SELECT * FROM users WHERE user_id order by rand() limit 0, 5" , nativeQuery = true)
+    @Query(value = "SELECT * FROM users WHERE user_id != :userId order by rand() limit 0, 5" , nativeQuery = true)
     List<User> findAllById(Long userId);
 
     @Modifying
