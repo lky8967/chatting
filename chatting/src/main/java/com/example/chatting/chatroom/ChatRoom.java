@@ -10,7 +10,9 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class ChatRoom extends TimeStamp {
+public class ChatRoom extends TimeStamp  {
+//
+//    private static  final long serialVersionUID = 6494678977089006639L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +38,8 @@ public class ChatRoom extends TimeStamp {
 
     @Column(nullable = false)
     private Boolean reqFixed;
+
+
 
     public void reqOut(Boolean bool) {
         this.reqOut = bool;

@@ -17,5 +17,8 @@ public interface RoomDto {
     Boolean getIsBanned();
     LocalDateTime getDate();
     String getMessage();
+    String getAcceptorUserImgUrl();
+    String getRequesterUserImgUrl();
+
 
 }

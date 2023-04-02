@@ -22,6 +22,8 @@ public class RoomResponseDto {
     private LocalDateTime date;
     private Boolean isBanned;
     private int unreadCnt;
+    private String requesterUserImgUrl;
+    private String acceptorUserImgUrl;
 
     public static RoomResponseDto createOf(RoomDto dto, int unreadCnt, Boolean isBanned){
 
@@ -40,6 +42,9 @@ public class RoomResponseDto {
         responseDto.requester = dto.getReqNickname();
         responseDto.acceptorId = dto.getAccId();
         responseDto.requesterId = dto.getReqId();
+
+        responseDto.requesterUserImgUrl = dto.getRequesterUserImgUrl();
+        responseDto.acceptorUserImgUrl = dto.getAcceptorUserImgUrl();
 
         return responseDto;
     }

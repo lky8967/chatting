@@ -53,6 +53,7 @@ public class ChatRoomController {
 
         Long userId = userDetails.getUserId();
         String nickname = userDetails.getNickname();
+
         System.out.println(" 전체 채팅방 목록 가져오기 userId = " + userId);
         System.out.println(" 전체 채팅방 목록 가져오기 nickname = " + nickname);
 
