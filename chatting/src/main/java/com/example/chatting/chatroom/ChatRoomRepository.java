@@ -26,8 +26,8 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
                                     ", u2.nickname AS reqNickname " +
                                     ", msg.message AS message " +
                                     ", msg.created_at AS date " +
-                                    ", u1.userImgUrl AS acceptorUserImgUrl " +
-                                    ", u2.userImgUrl AS requesterUserImgUrl " +
+                                    ", u1.user_img_url AS acceptorUserImgUrl " +
+                                    ", u2.user_img_url AS requesterUserImgUrl " +
                     "FROM chat_room r " +
                     "INNER JOIN users u1 ON r.acceptor_user_id = u1.user_id " +
                     "INNER JOIN users u2 ON r.requester_user_id = u2.user_id " +
