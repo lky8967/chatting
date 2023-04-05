@@ -11,4 +11,5 @@ public class UserRequestDto {
     private String nickname;
     private String userImgUrl;
     private String introduction;
+    private String registerDate;
 }

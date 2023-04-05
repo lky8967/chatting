@@ -17,6 +17,7 @@ public class UserResponseDto {
     private String userImgUrl;
     private String introduction;
     private Boolean isBanned ;
+    private String registerDate;
 
 
     public UserResponseDto(User user) {
@@ -25,6 +26,7 @@ public class UserResponseDto {
         this.nickname = user.getNickname();
         this.userImgUrl = user.getUserImgUrl();
         this.introduction = user.getIntroduction();
+        this.registerDate = user.getRegisterDate();
     }
 
 

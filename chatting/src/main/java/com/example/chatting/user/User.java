@@ -33,14 +33,18 @@ public class User {
     @Column
     private String introduction;
 
+    @Column(nullable = false)
+    private String registerDate;
 
-    public User(String username, String password, String passwordCheck, String nickname, String userImgUrl, String introduction){
+
+    public User(String username, String password, String passwordCheck, String nickname, String userImgUrl, String introduction , String registerDate){
         this.username = username;
         this.password = password;
         this.passwordCheck = passwordCheck;
         this.nickname = nickname;
         this.userImgUrl = userImgUrl;
         this.introduction = introduction;
+        this.registerDate = registerDate;
     }
 
     public void updateUser(String nickname, String introduction, String userImgUrl) {
