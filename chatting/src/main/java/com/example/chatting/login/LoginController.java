@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
@@ -21,8 +22,10 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("/api/users/login")
-    public ResponseEntity<String> login(final HttpServletResponse response, @RequestBody LoginRequestDto loginRequestDto) {
-        String login = loginService.login(loginRequestDto);
+    public ResponseEntity<String> login(final HttpServletResponse response
+                                        , @RequestBody LoginRequestDto loginRequestDto
+                                       ) {
+        String login = loginService.login(loginRequestDto , response);
         System.out.println(" login = " + login);
         return new ResponseEntity<>(login, HttpStatus.OK);
     }
