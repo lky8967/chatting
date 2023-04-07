@@ -63,6 +63,10 @@ public class SessionManager {
         if (sessionCookie != null){
             sessionStore.remove(sessionCookie.getValue());
         }
+        count--;
+        if( count < 0 ) count = 0;
+
+
     }
 
     private Cookie findCookie(HttpServletRequest request, String cookieName) {
